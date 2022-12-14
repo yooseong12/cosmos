@@ -1,0 +1,20 @@
+description = 'api'
+
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    api project(path :':domain', configuration: 'default')
+    implementation('commons-io:commons-io:2.6')
+}
+
+task zip(type: Zip, dependsOn: bootJar) {
+//    from ('../.ebextensions') {
+//        into '.ebextensions'
+//    }
+    from '.procfile'
+    from jar.outputs.files
+
+    destinationDir project.buildDir
+}

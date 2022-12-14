@@ -1,13 +1,8 @@
 package com.toy.cosmos.domain;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
+@SpringBootApplication(scanBasePackages = "com.toy.cosmos.domain")
 class DomainApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
 
 }
