@@ -1,13 +1,13 @@
-package com.toy.cosmos;
+package com.toy.cosmos.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CosmosApplicationTests {
+class DomainApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
