@@ -1,15 +1,18 @@
 package com.toy.cosmos.api.model.request;
 
 import com.toy.cosmos.domain.common.CommonConstant;
+import com.toy.cosmos.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.UtilityClass;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@UtilityClass
 public class UserRequest {
 
     @Getter
@@ -32,5 +35,14 @@ public class UserRequest {
         @NotNull
         @Pattern(regexp = CommonConstant.RegExp.PHONE)
         String phone;
+
+        public User toEntity() {
+            return User.builder()
+                    .email(email)
+                    .password(password)
+                    .nickname(nickname)
+                    .phone(phone)
+                    .build();
+        }
     }
 }

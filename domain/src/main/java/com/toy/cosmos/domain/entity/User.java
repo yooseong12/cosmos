@@ -22,21 +22,18 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NotNull
-    @Size(max = 50)
+    @NotNull @Size(max = 50)
     @Column(unique = true)
     @Pattern(regexp = CommonConstant.RegExp.EMAIL)
     String email;
 
-    @NotNull
-    @Size(max = 255)
+    @NotNull @Size(max = 255)
     String password;
 
     @NotNull
     String nickname;
 
-    @NotNull
-    @Pattern(regexp = CommonConstant.RegExp.PHONE)
+    @NotNull @Pattern(regexp = CommonConstant.RegExp.PHONE)
     String phone;
 
 }

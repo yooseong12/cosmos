@@ -25,5 +25,4 @@ public class UserFriends extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     Status.UserFiends status;
-
 }
