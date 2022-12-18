@@ -27,5 +27,6 @@ public class UserRepositoryTest {
         User user = userRepository.findById(userId).get();
 
         Assert.assertEquals("a@naver.com", user.getEmail());
+        System.out.println(user.getEmail());
     }
 }

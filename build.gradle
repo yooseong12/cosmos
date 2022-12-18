@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
 
-    project.group = 'com.hyunjun.report'
+    project.group = 'com.toy.cosmos'
 
     sourceCompatibility = 11
     targetCompatibility = 11
@@ -36,6 +36,7 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-actuator")
         implementation("org.hibernate:hibernate-validator:6.1.5.Final")
         implementation("org.slf4j:slf4j-simple:1.7.30")
+
 
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
