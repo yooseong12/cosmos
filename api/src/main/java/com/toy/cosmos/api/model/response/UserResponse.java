@@ -1,5 +1,6 @@
 package com.toy.cosmos.api.model.response;
 
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import lombok.experimental.UtilityClass;
 
@@ -7,7 +8,7 @@ import lombok.experimental.UtilityClass;
 public class UserResponse {
 
     @UtilityClass
-    public static class Read{
+    public static class Read {
         String email;
 
         String password;
@@ -25,4 +26,15 @@ public class UserResponse {
                     .build();
         }
     }
+
+    @UtilityClass
+    public static class Friend {
+
+        Long friendId;
+
+        String nickname;
+
+        Status.UserFiend status;
+    }
+
 }

@@ -2,7 +2,7 @@ package com.toy.cosmos.domain.common;
 
 public class Status {
 
-    public enum UserFiends {
+    public enum UserFiend {
         REQUEST,
         SUCCESS;
     }

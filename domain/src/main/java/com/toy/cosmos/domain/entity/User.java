@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,5 +36,8 @@ public class User extends BaseEntity {
 
     @NotNull @Pattern(regexp = CommonConstant.RegExp.PHONE)
     String phone;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    Set<UserFriend> userFriends;
 
 }

@@ -1,5 +1,6 @@
 package com.toy.cosmos.domain.repository;
 
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -27,6 +28,13 @@ public class UserRepositoryTest {
         User user = userRepository.findById(userId).get();
 
         Assert.assertEquals("a@naver.com", user.getEmail());
-        System.out.println(user.getEmail());
     }
+
+    @Test
+    public void findUserWithUserFriendTest() {
+        User user = userRepository.findUserWithUserFriend(1L, Status.UserFiend.REQUEST);
+
+        log.info("user: {}", user);
+    }
+
 }

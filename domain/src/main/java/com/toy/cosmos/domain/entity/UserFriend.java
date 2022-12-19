@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
@@ -12,17 +13,24 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "friendId"})
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserFriends extends BaseEntity {
+public class UserFriend extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
+    @Positive
     Long friendId;
 
     @Enumerated(EnumType.STRING)
-    Status.UserFiends status;
+    Status.UserFiend status;
+
 }

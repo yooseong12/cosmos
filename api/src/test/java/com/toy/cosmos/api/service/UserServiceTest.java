@@ -2,16 +2,23 @@ package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.model.request.UserRequest;
 import com.toy.cosmos.domain.entity.User;
+import com.toy.cosmos.domain.entity.UserFriend;
 import com.toy.cosmos.domain.repository.UserRepository;
-import org.junit.Assert;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
+import java.util.Set;
+
+@Slf4j
 @EntityScan(basePackages = {"com.toy.cosmos"})
 @SpringBootTest
+@ActiveProfiles("test")
 class UserServiceTest {
 
     @Autowired
@@ -21,14 +28,9 @@ class UserServiceTest {
     UserRepository userRepository;
 
     @Test
-    @Rollback(value = false)
     void joinTest() {
         // given
         UserRequest.Join request = new UserRequest.Join();
-        Long userId = 1L;
-
-        User user = userRepository.findById(userId).get();
-
         request.setEmail("d@naver.com");
         request.setPassword("1234");
         request.setNickname("아무개");
@@ -38,17 +40,19 @@ class UserServiceTest {
         userService.join(request);
 
         // then
-        Assert.assertEquals("d@naver.com", user.getEmail());
+
     }
 
-//    @Test
-//    @Rollback(value = false)
-//    void readTest() {
-//        //given
-//        Long userId = 1L;
-//
-//        //when
-//        userService.read(userId);
-//        //then
-//    }
+    @Test
+    @Transactional
+    void findUserWithUserFriendsTest() {
+        Long id = 1L;
+
+        User 김유성 = userRepository.getOne(id);
+        Set<UserFriend> 유성이친구들 = 김유성.getUserFriends();
+
+        Assertions.assertEquals(2, 유성이친구들.size());
+    }
+
+
 }

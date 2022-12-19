@@ -1,6 +1,7 @@
 package com.toy.cosmos.api.model.request;
 
 import com.toy.cosmos.domain.common.CommonConstant;
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,4 +46,14 @@ public class UserRequest {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class Friend {
+
+        Status.UserFiend status;
+
+    }
+
 }
