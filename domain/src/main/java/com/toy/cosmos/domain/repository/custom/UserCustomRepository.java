@@ -5,6 +5,6 @@ import com.toy.cosmos.domain.entity.User;
 
 public interface UserCustomRepository {
 
-    User findUserWithUserFriend(Long id, Status.UserFiend status);
+    User findUserWithUserFriend(Long id, Status.UserFriend status);
 
 }

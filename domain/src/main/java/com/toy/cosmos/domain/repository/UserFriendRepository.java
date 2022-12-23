@@ -13,6 +13,6 @@ import java.util.List;
 public interface UserFriendRepository extends JpaRepository<UserFriend, Long> {
 
     List<UserFriend> findAllByUserAndStatus(@Param("user") @NotEmpty User user,
-                                            @Param("status") @NotNull Status.UserFiend status);
+                                            @Param("status") @NotNull Status.UserFriend status);
 
 }

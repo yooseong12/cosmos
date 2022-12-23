@@ -2,6 +2,10 @@ package com.toy.cosmos.api.model.response;
 
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -27,14 +31,18 @@ public class UserResponse {
         }
     }
 
-    @UtilityClass
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    @Setter
     public static class Friend {
 
         Long friendId;
 
         String nickname;
 
-        Status.UserFiend status;
+        Status.UserFriend status;
     }
 
 }

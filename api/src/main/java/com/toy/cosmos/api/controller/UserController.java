@@ -2,8 +2,11 @@ package com.toy.cosmos.api.controller;
 
 import com.toy.cosmos.api.model.request.UserRequest;
 import com.toy.cosmos.api.service.UserService;
+import com.toy.cosmos.domain.entity.UserFriend;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -23,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-    public void getFriends(UserRequest.Friend request) {
-        userService.getFriends(request);
+    public List<UserFriend> getFriends(UserRequest.Friend request) {
+        return userService.getFriends(request);
     }
 }

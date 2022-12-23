@@ -1,5 +1,6 @@
 package com.toy.cosmos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.toy.cosmos.domain.common.CommonConstant;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -38,6 +39,7 @@ public class User extends BaseEntity {
     String phone;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
     Set<UserFriend> userFriends;
 
 }

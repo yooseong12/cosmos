@@ -1,5 +1,6 @@
 package com.toy.cosmos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.toy.cosmos.domain.common.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,12 +26,13 @@ public class UserFriend extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     User user;
 
     @Positive
     Long friendId;
 
     @Enumerated(EnumType.STRING)
-    Status.UserFiend status;
+    Status.UserFriend status;
 
 }

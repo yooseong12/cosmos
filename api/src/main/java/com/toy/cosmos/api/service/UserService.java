@@ -11,6 +11,8 @@ import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,26 +33,30 @@ public class UserService {
         Long userId = getLoginUserId();
         User friend = userRepository.findById(id).orElseThrow(NotFoundUserException::new);
 
-        UserFriend userFriend = UserFriend.builder()
+        UserFriend userFriend = com.toy.cosmos.domain.entity.UserFriend.builder()
                 .user(User.builder().id(userId).build())
                 .friendId(friend.getId())
-                .status(Status.UserFiend.REQUEST)
+                .status(Status.UserFriend.FOLLOW)
                 .build();
 
         // todo: 중복 발생시 DataIntegrityViolationException 발생, 처리 예정
         userFriendRepository.save(userFriend);
     }
 
-    public void getFriends(UserRequest.Friend request) {
+    public List<UserFriend> getFriends(UserRequest.Friend request) {
         Long userId = getLoginUserId();
-        userFriendRepository.findAllByUserAndStatus(
+        request.setStatus(Status.UserFriend.FOLLOW);
+        return userFriendRepository.findAllByUserAndStatus(
                 User.builder().id(userId).build(), request.getStatus()
         );
+
+
     }
 
     // todo: spring security 작업 후 변경예정
     private Long getLoginUserId() {
         return 1L;
     }
+
 
 }

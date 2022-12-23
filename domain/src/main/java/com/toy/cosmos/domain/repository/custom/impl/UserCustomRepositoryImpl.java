@@ -17,7 +17,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
     private final EntityManager entityManager;
 
     @Override
-    public User findUserWithUserFriend(Long id, Status.UserFiend status) {
+    public User findUserWithUserFriend(Long id, Status.UserFriend status) {
         return new JPAQuery<User>(entityManager)
                 .from(user)
                 .join(user.userFriends, userFriend)

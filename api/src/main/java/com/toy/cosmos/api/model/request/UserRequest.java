@@ -52,7 +52,7 @@ public class UserRequest {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Friend {
 
-        Status.UserFiend status;
+        Status.UserFriend status;
 
     }
 

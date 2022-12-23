@@ -32,7 +32,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findUserWithUserFriendTest() {
-        User user = userRepository.findUserWithUserFriend(1L, Status.UserFiend.REQUEST);
+        User user = userRepository.findUserWithUserFriend(1L, Status.UserFriend.FOLLOW);
 
         log.info("user: {}", user);
     }

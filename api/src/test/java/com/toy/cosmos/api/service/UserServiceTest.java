@@ -1,6 +1,7 @@
 package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.model.request.UserRequest;
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
 import com.toy.cosmos.domain.repository.UserRepository;
@@ -52,6 +53,17 @@ class UserServiceTest {
         Set<UserFriend> 유성이친구들 = 김유성.getUserFriends();
 
         Assertions.assertEquals(2, 유성이친구들.size());
+    }
+
+    @Test
+    @Transactional
+    void getFriendsTest() {
+        UserRequest.Friend request = new UserRequest.Friend();
+        request.setStatus(Status.UserFriend.FOLLOW);
+
+        userService.getFriends(request);
+
+
     }
 
 
