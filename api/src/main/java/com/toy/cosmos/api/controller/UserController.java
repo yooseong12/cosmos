@@ -1,11 +1,15 @@
 package com.toy.cosmos.api.controller;
 
 import com.toy.cosmos.api.model.request.UserRequest;
+import com.toy.cosmos.api.model.response.Response;
+import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.api.service.UserService;
-import com.toy.cosmos.domain.entity.UserFriend;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 @RestController
@@ -26,7 +30,35 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-    public List<UserFriend> getFriends(UserRequest.Friend request) {
-        return userService.getFriends(request);
+    public Response<List<UserResponse.UserInfo>> getFriends(UserRequest.Friend request) {
+        return Response.<List<UserResponse.UserInfo>>builder()
+                .code(HttpStatus.OK.value())
+                .data(userService.getFriends(request))
+                .build();
     }
+
+    // 이메일, 핸드폰번호로 친구를 검색하고싶다.
+    @GetMapping("/friend")
+    public Response<UserResponse.UserInfo> findFriend(UserRequest.FindFriend request) {
+        if (ObjectUtils.isEmpty(request.getEmail()) && ObjectUtils.isEmpty(request.getPhone())) {
+            throw new ValidationException();
+        }
+
+        return Response.<UserResponse.UserInfo>builder()
+                .code(HttpStatus.OK.value())
+                .data(userService.findFriend(request))
+                .build();
+    }
+
+    @DeleteMapping("/friend/{friendId:[\\d]+}")
+    public Response<Void> deleteFriend(@PathVariable Long friendId) {
+        return userService.deleteFriend(friendId);
+    }
+
+    @PatchMapping("/friend/{friendId:[\\d]+}")
+    public Response<Void> blockedFriend(@PathVariable Long friendId) {
+        // todo
+        return null;
+    }
+
 }

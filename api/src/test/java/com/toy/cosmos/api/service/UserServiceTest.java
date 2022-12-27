@@ -1,6 +1,7 @@
 package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.model.request.UserRequest;
+import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
@@ -13,7 +14,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -27,6 +30,9 @@ class UserServiceTest {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Test
     void joinTest() {
@@ -46,6 +52,7 @@ class UserServiceTest {
 
     @Test
     @Transactional
+        // todo: 좀더 알아보기
     void findUserWithUserFriendsTest() {
         Long id = 1L;
 
@@ -61,10 +68,29 @@ class UserServiceTest {
         UserRequest.Friend request = new UserRequest.Friend();
         request.setStatus(Status.UserFriend.FOLLOW);
 
-        userService.getFriends(request);
+        List<UserResponse.UserInfo> friends = userService.getFriends(request);
 
-
+        Assertions.assertEquals(2, friends.size());
+        Assertions.assertEquals(2, friends.stream().findFirst().orElseThrow().getId());
     }
 
 
+    @Test
+    void findFriendTest() {
+        String email = "a@naver.com";
+        String phone = "01012345678";
+
+        UserRequest.FindFriend emailRequest = new UserRequest.FindFriend();
+        emailRequest.setEmail(email);
+
+        UserRequest.FindFriend phoneRequest = new UserRequest.FindFriend();
+        phoneRequest.setPhone(phone);
+
+        UserResponse.UserInfo findByEmail = userService.findFriend(emailRequest);
+
+        UserResponse.UserInfo findByPhone = userService.findFriend(phoneRequest);
+
+        Assertions.assertEquals(1, findByEmail.getId());
+        Assertions.assertEquals(2, findByPhone.getId());
+    }
 }

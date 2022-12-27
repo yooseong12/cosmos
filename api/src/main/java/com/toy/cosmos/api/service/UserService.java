@@ -3,6 +3,8 @@ package com.toy.cosmos.api.service;
 import com.toy.cosmos.api.exception.user.AlreadyExistUserException;
 import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.UserRequest;
+import com.toy.cosmos.api.model.response.Response;
+import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
@@ -43,14 +45,27 @@ public class UserService {
         userFriendRepository.save(userFriend);
     }
 
-    public List<UserFriend> getFriends(UserRequest.Friend request) {
+    public UserResponse.Friend getFriend(String email) {
         Long userId = getLoginUserId();
-        request.setStatus(Status.UserFriend.FOLLOW);
-        return userFriendRepository.findAllByUserAndStatus(
-                User.builder().id(userId).build(), request.getStatus()
+        UserFriend userFriend = userFriendRepository.findById(1L).get(); // todo: Request 파라미터
+
+        return UserResponse.Friend.of(userFriend);
+    }
+
+    public List<UserResponse.UserInfo> getFriends(UserRequest.Friend request) {
+        Long userId = getLoginUserId();
+        List<User> users = userRepository.findAllUserWithUserFriend(
+                userId, request.getStatus()
         );
 
+        return UserResponse.UserInfo.of(users);
+    }
 
+    public UserResponse.UserInfo findFriend(UserRequest.FindFriend request) {
+        return UserResponse.UserInfo.of(
+                userRepository.findBy(request.getEmail(), request.getPhone())
+                        .orElseThrow(NotFoundUserException::new)
+        );
     }
 
     // todo: spring security 작업 후 변경예정
@@ -59,4 +74,7 @@ public class UserService {
     }
 
 
+    public Response<Void> deleteFriend(Long friendId) {
+        return null;
+    }
 }

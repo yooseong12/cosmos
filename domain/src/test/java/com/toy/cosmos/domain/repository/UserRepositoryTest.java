@@ -5,11 +5,14 @@ import com.toy.cosmos.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 @Slf4j
 @DataJpaTest
@@ -31,10 +34,13 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findUserWithUserFriendTest() {
-        User user = userRepository.findUserWithUserFriend(1L, Status.UserFriend.FOLLOW);
+    public void findAllUserWithUserFriendTest() {
+        Long userId = 1L;
+        Status.UserFriend status = Status.UserFriend.FOLLOW;
 
-        log.info("user: {}", user);
+        List<User> users = userRepository.findAllUserWithUserFriend(userId, status);
+
+        Assertions.assertEquals(2, users.size());
     }
 
 }

@@ -56,4 +56,15 @@ public class UserRequest {
 
     }
 
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class FindFriend {
+
+        String email;
+
+        String phone;
+
+    }
+
 }
