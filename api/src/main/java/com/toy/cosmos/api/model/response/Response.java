@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
@@ -14,9 +15,11 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Response<T> {
 
-    Integer code;
+    @Builder.Default
+    Integer code = HttpStatus.OK.value();
 
-    String message;
+    @Builder.Default
+    String message = HttpStatus.OK.getReasonPhrase();
 
     T data;
 }

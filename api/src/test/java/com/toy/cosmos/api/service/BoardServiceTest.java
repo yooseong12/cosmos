@@ -28,13 +28,12 @@ public class BoardServiceTest {
     @Test
     @Transactional
     void insertBoardTest() {
-        Long userId = 1L;
         BoardRequest.Register request = new BoardRequest.Register();
         request.setTitle("새로운 제목6");
         request.setContent("새로운 내용6");
         Board board = boardRepository.getOne(6L);
 
-        boardService.insertBoard(request, userId);
+        boardService.insertBoard(request);
 
 
         Assertions.assertEquals("새로운 제목6", board.getTitle());

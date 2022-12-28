@@ -1,12 +1,9 @@
 package com.toy.cosmos.api.service;
 
-import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.api.model.response.BoardResponse;
 import com.toy.cosmos.domain.entity.Board;
-import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.repository.BoardRepository;
-import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +17,43 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    private final UserRepository userRepository;
-
     @Transactional
-    public void insertBoard(BoardRequest.Register request, Long id) {
-        User user = userRepository.findById(id).
-                orElseThrow(NotFoundUserException::new);
-        boardRepository.findByTitle(request.getTitle()).ifPresent(board -> {
-            throw new IllegalArgumentException("이미 있는 제목"); // todo: exception 생성해야함
-        });
-
-        request.setWriter(user.getNickname());
-
-        boardRepository.save(request.toEntity());
+    public void insertBoard(BoardRequest.Register request) {
+        Long userId = getLoginUserId();
+        boardRepository.save(request.toEntity(userId));
     }
 
 
-    public BoardResponse.GetList getBoards() {
-        List<Board> board = boardRepository.findAllByOrderByIdDesc();
+    public List<BoardResponse> getBoards(BoardRequest.Search request) {
+        // todo: 유성 작업
+        List<Board> boards = boardRepository.findAllByOrderByIdDesc();
 
-        return null;
+        return BoardResponse.of(boards);
+    }
+
+    public BoardResponse getBoard(Long id) {
+        Long userId = getLoginUserId();
+        // todo: 유성 상세조회 작업
+        Board board = boardRepository.findById(id).get();
+        /**
+         * 글 작성가 계속 조회를 하면 조회수 up 어뷰징 가능함.
+         *
+         * 조회수 count up
+         * 글 작성자가 조회하는 경우라면, count up 하지 않는다.
+         */
+
+        return BoardResponse.of(board);
+    }
+
+    public void editBoard(Long id, BoardRequest.Register request) {
+        // todo:
+    }
+
+    public void deleteBoard(Long id) {
+        // todo:
+    }
+
+    private Long getLoginUserId() {
+        return 1L;
     }
 }

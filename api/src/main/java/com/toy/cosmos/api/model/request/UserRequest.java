@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
+import org.springframework.data.domain.Sort;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -60,6 +61,10 @@ public class UserRequest {
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class FindFriend {
+
+        Integer page = 0;
+
+        Integer size = 5;
 
         String email;
 

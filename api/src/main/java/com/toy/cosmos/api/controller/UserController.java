@@ -44,24 +44,21 @@ public class UserController {
         }
 
         return Response.<UserResponse.UserInfo>builder()
-                .code(HttpStatus.OK.value())
                 .data(userService.findFriend(request))
                 .build();
     }
 
     @DeleteMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
     public Response<Void> deleteFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+        userService.deleteFriend(userId, friendId);
         return Response.<Void>builder()
-                .code(HttpStatus.OK.value())
-                .data(userService.deleteFriend(userId, friendId))
                 .build();
     }
 
     @PatchMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
     public Response<Void> blockedFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+        userService.blockedFriend(userId, friendId);
         return Response.<Void>builder()
-                .code(HttpStatus.OK.value())
-                .data(userService.blockedFriend(userId, friendId))
                 .build();
     }
 

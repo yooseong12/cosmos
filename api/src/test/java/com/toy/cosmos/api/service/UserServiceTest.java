@@ -30,9 +30,6 @@ class UserServiceTest {
     UserService userService;
 
     @Autowired
-    UserFriendRepository userFriendRepository;
-
-    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -113,17 +110,18 @@ class UserServiceTest {
     }
 
     @Test
-    @Transactional
     void blockedFriendTest() {
         Long userId = 1L;
         Long friendId = 2L;
-        UserFriend userFriend = userFriendRepository.findById(userId).get();
 
         userService.blockedFriend(userId, friendId);
-
-
-        Assertions.assertEquals("BLOCKED", userFriend.getStatus());
     }
 
+    @Test
+    void requestFriendTest() {
+        Long friendId = 3L;
+
+        userService.requestFriend(friendId);
+    }
 
 }

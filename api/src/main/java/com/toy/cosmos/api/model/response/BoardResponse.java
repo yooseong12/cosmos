@@ -1,38 +1,38 @@
 package com.toy.cosmos.api.model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.toy.cosmos.domain.entity.Board;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@UtilityClass
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BoardResponse {
 
-    @UtilityClass
-    @Builder
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    public static class GetList {
+    Long id;
 
-        Long id;
+    String title;
 
-        String title;
+    String content;
 
-        Integer hits;
+    Integer hits;
 
-        Integer like;
+    Integer like;
 
-        public Board toEntity() {
-            return Board.builder()
-                    .id(id)
-                    .title(title)
-                    .hits(hits)
-                    .liked(like)
-                    .build();
-        }
+    public static List<BoardResponse> of(List<Board> boards) {
+        return boards.stream().map(BoardResponse::of).collect(Collectors.toList());
     }
+
+    public static BoardResponse of(Board boards) {
+        return null;
+    }
+
 }
 

@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("boards")
+@RequestMapping("/board")
 public class BoardController {
 
     /**
@@ -32,18 +34,39 @@ public class BoardController {
 
     private final AttachedFileService attachedFileService;
 
-    @PostMapping("/board/{id:[\\d]+}")
-    public void insertBoard(@RequestBody BoardRequest.Register request, MultipartFile file, @PathVariable Long id) {
+    @PostMapping("/boards")
+    public void insertBoard(@RequestBody BoardRequest.Register request, MultipartFile file) {
+        // todo: 첨부파일 제거 controller, service, entity
         attachedFileService.store(file);
-        boardService.insertBoard(request, id);
+        boardService.insertBoard(request);
     }
 
     @GetMapping("/boards")
-    public Response<BoardResponse.GetList> getBoards() {
-        return Response.<BoardResponse.GetList>builder()
+    public Response<List<BoardResponse>> getBoards(BoardRequest.Search request) {
+        return Response.<List<BoardResponse>>builder()
                 .code(HttpStatus.OK.value())
-                .data(boardService.getBoards())
+                .data(boardService.getBoards(request))
                 .build();
+    }
+
+    @GetMapping("/boards/{id:[\\d]+}")
+    public Response<BoardResponse> getBoard(@PathVariable Long id) {
+        return Response.<BoardResponse>builder()
+                .code(HttpStatus.OK.value())
+                .data(boardService.getBoard(id))
+                .build();
+    }
+
+    @PatchMapping("/boards/{id:[\\d]+}")
+    public Response<Void> editBoard(@PathVariable Long id, BoardRequest.Register request) {
+        boardService.editBoard(id, request);
+        return Response.<Void>builder().build();
+    }
+
+    @DeleteMapping("/boards/{id:[\\d]+}")
+    public Response<Void> deleteBoard(@PathVariable Long id) {
+        boardService.deleteBoard(id);
+        return Response.<Void>builder().build();
     }
 
 }

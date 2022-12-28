@@ -1,6 +1,7 @@
 package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.exception.user.AlreadyExistUserException;
+import com.toy.cosmos.api.exception.user.AlreadyExistUserFriendException;
 import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.UserRequest;
 import com.toy.cosmos.api.model.response.UserResponse;
@@ -32,23 +33,20 @@ public class UserService {
 
     public void requestFriend(Long id) {
         Long userId = getLoginUserId();
-        User friend = userRepository.findById(id).orElseThrow(NotFoundUserException::new);
 
-        UserFriend userFriend = com.toy.cosmos.domain.entity.UserFriend.builder()
+        userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+        userFriendRepository.findByUserAndFriendId(User.builder().id(userId).build(), id)
+                .ifPresent(uf -> {
+                    throw new AlreadyExistUserFriendException();
+                });
+
+        UserFriend userFriend = UserFriend.builder()
                 .user(User.builder().id(userId).build())
-                .friendId(friend.getId())
+                .friendId(id)
                 .status(Status.UserFriend.FOLLOW)
                 .build();
 
-        // todo: 중복 발생시 DataIntegrityViolationException 발생, 처리 예정
         userFriendRepository.save(userFriend);
-    }
-
-    public UserResponse.Friend getFriend(String email) {
-        Long userId = getLoginUserId();
-        UserFriend userFriend = userFriendRepository.findById(1L).get(); // todo: Request 파라미터
-
-        return UserResponse.Friend.of(userFriend);
     }
 
     public List<UserResponse.UserInfo> getFriends(UserRequest.Friend request) {
@@ -72,18 +70,13 @@ public class UserService {
         return 1L;
     }
 
-
-    public Void deleteFriend(Long userId, Long friendId) {
+    public void deleteFriend(Long userId, Long friendId) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
-
         userRepository.deleteFriendIdByUserId(userId, friendId);
-        return null;
     }
 
-    public Void blockedFriend(Long userId, Long friendId) {
+    public void blockedFriend(Long userId, Long friendId) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
-
         userRepository.blockedFriend(userId, friendId);
-        return null;
     }
 }
