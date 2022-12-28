@@ -1,11 +1,13 @@
 package com.toy.cosmos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +22,10 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
     @NotNull
     @Column(unique = true)
     @Size(max = 50)
@@ -28,14 +34,16 @@ public class Board extends BaseEntity {
     @NotNull
     String content;
 
-    @NotNull
-    String writer;
-
     Integer hits;
 
-    Integer like;
+    Integer liked;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    Set<AttachedFile> attachedFiles;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    Set<Comment> comments;
+
 }

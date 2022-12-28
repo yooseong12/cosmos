@@ -25,13 +25,10 @@ public class BoardRequest {
         @NotNull
         String content;
 
-        String writer;
-
         public Board toEntity() {
             return Board.builder()
                     .title(title)
                     .content(content)
-                    .writer(writer)
                     .build();
         }
     }

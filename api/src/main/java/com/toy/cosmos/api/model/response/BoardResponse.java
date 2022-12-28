@@ -30,7 +30,7 @@ public class BoardResponse {
                     .id(id)
                     .title(title)
                     .hits(hits)
-                    .like(like)
+                    .liked(like)
                     .build();
         }
     }

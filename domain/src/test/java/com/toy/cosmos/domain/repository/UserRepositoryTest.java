@@ -75,7 +75,7 @@ public class UserRepositoryTest {
 
         Comment comment = commentRepository.findById(commentId).get();
 
-        Assert.assertEquals("댓글1", comment.getComment());
+        Assert.assertEquals("댓글1", comment.getContent());
     }
 
 

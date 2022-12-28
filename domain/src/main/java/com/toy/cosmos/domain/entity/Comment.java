@@ -20,7 +20,7 @@ public class Comment extends BaseEntity {
     Long id;
 
     @NotNull
-    String comment;
+    String content;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
