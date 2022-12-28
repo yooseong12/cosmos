@@ -37,7 +37,6 @@ public class UserController {
                 .build();
     }
 
-    // 이메일, 핸드폰번호로 친구를 검색하고싶다.
     @GetMapping("/friend")
     public Response<UserResponse.UserInfo> findFriend(UserRequest.FindFriend request) {
         if (ObjectUtils.isEmpty(request.getEmail()) && ObjectUtils.isEmpty(request.getPhone())) {
@@ -50,15 +49,20 @@ public class UserController {
                 .build();
     }
 
-    @DeleteMapping("/friend/{friendId:[\\d]+}")
-    public Response<Void> deleteFriend(@PathVariable Long friendId) {
-        return userService.deleteFriend(friendId);
+    @DeleteMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
+    public Response<Void> deleteFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+        return Response.<Void>builder()
+                .code(HttpStatus.OK.value())
+                .data(userService.deleteFriend(userId, friendId))
+                .build();
     }
 
-    @PatchMapping("/friend/{friendId:[\\d]+}")
-    public Response<Void> blockedFriend(@PathVariable Long friendId) {
-        // todo
-        return null;
+    @PatchMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
+    public Response<Void> blockedFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+        return Response.<Void>builder()
+                .code(HttpStatus.OK.value())
+                .data(userService.blockedFriend(userId, friendId))
+                .build();
     }
 
 }

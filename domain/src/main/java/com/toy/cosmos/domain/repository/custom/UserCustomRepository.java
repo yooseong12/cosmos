@@ -12,4 +12,8 @@ public interface UserCustomRepository {
 
     Optional<User> findBy(String email, String phone);
 
+    long deleteFriendIdByUserId(Long userId, Long friendId);
+
+    long blockedFriend(Long userId, Long friendId);
+
 }

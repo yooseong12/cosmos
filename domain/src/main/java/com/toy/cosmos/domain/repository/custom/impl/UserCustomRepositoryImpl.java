@@ -1,6 +1,8 @@
 package com.toy.cosmos.domain.repository.custom.impl;
 
+import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.repository.custom.UserCustomRepository;
@@ -46,4 +48,30 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
         );
     }
 
+    /**
+     * delete
+     * from user u join user_friend uf
+     * on u.id = uf.user_id
+     * where
+     * u.id = uf.user_id and
+     */
+
+    @Override
+    public long deleteFriendIdByUserId(Long userId, Long friendId) {
+        return new JPADeleteClause(entityManager, userFriend)
+                .where(user.id.eq(userId)
+                        .and(userFriend.friendId.eq(friendId)))
+                .execute();
+
+    }
+
+    @Override
+    public long blockedFriend(Long userId, Long friendId) {
+        return new JPAUpdateClause(entityManager, userFriend)
+                .set(userFriend.status, Status.UserFriend.BLOCKED)
+                .where(user.id.eq(userId)
+                        .and(userFriend.friendId.eq(friendId))
+                        .and(userFriend.status.eq(Status.UserFriend.FOLLOW)))
+                .execute();
+    }
 }

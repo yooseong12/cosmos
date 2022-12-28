@@ -5,6 +5,7 @@ import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
+import com.toy.cosmos.domain.repository.UserFriendRepository;
 import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -27,6 +28,9 @@ class UserServiceTest {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserFriendRepository userFriendRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -93,4 +97,33 @@ class UserServiceTest {
         Assertions.assertEquals(1, findByEmail.getId());
         Assertions.assertEquals(2, findByPhone.getId());
     }
+
+    @Test
+    @Transactional
+    void deleteFriendTest() {
+        Long userId = 1l;
+        Long friendId = 2L;
+
+        User user = userRepository.getOne(userId);
+        Set<UserFriend> userFriends = user.getUserFriends();
+
+        userService.deleteFriend(userId, friendId);
+
+        Assertions.assertEquals(1, userFriends.size());
+    }
+
+    @Test
+    @Transactional
+    void blockedFriendTest() {
+        Long userId = 1L;
+        Long friendId = 2L;
+        UserFriend userFriend = userFriendRepository.findById(userId).get();
+
+        userService.blockedFriend(userId, friendId);
+
+
+        Assertions.assertEquals("BLOCKED", userFriend.getStatus());
+    }
+
+
 }

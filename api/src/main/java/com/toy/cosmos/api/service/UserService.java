@@ -3,7 +3,6 @@ package com.toy.cosmos.api.service;
 import com.toy.cosmos.api.exception.user.AlreadyExistUserException;
 import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.UserRequest;
-import com.toy.cosmos.api.model.response.Response;
 import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
@@ -74,7 +73,17 @@ public class UserService {
     }
 
 
-    public Response<Void> deleteFriend(Long friendId) {
+    public Void deleteFriend(Long userId, Long friendId) {
+        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+
+        userRepository.deleteFriendIdByUserId(userId, friendId);
+        return null;
+    }
+
+    public Void blockedFriend(Long userId, Long friendId) {
+        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+
+        userRepository.blockedFriend(userId, friendId);
         return null;
     }
 }
