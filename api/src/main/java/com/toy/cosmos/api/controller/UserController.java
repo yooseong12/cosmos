@@ -6,6 +6,7 @@ import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.api.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/friends")
+    @PreAuthorize("isAuthenticated()")
     public Response<List<UserResponse.UserInfo>> getFriends(UserRequest.Friend request) {
         return Response.<List<UserResponse.UserInfo>>builder()
                 .code(HttpStatus.OK.value())

@@ -2,13 +2,19 @@ package com.toy.cosmos.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.toy.cosmos.domain.common.CommonConstant;
+import com.toy.cosmos.domain.value.Authority;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +44,45 @@ public class User extends BaseEntity {
     @NotNull @Pattern(regexp = CommonConstant.RegExp.PHONE)
     String phone;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    Authority authority;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
     Set<UserFriend> userFriends;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.getAuthority().name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return nickname;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public boolean isAdmin() {
+        return this.getAuthority() == Authority.ROLE_ADMIN;
+    }
 }

@@ -23,7 +23,6 @@ public class BoardService {
         boardRepository.save(request.toEntity(userId));
     }
 
-
     public List<BoardResponse> getBoards(BoardRequest.Search request) {
         // todo: 유성 작업
         List<Board> boards = boardRepository.findAllByOrderByIdDesc();

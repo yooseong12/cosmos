@@ -3,7 +3,6 @@ package com.toy.cosmos.api.controller;
 import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.api.model.response.BoardResponse;
 import com.toy.cosmos.api.model.response.Response;
-import com.toy.cosmos.api.service.AttachedFileService;
 import com.toy.cosmos.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,12 +31,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    private final AttachedFileService attachedFileService;
-
     @PostMapping("/boards")
     public void insertBoard(@RequestBody BoardRequest.Register request, MultipartFile file) {
         // todo: 첨부파일 제거 controller, service, entity
-        attachedFileService.store(file);
         boardService.insertBoard(request);
     }
 

@@ -1,3 +1,3 @@
 rootProject.name = 'cosmos'
-include('domain', 'api')
+include('domain', 'api', 'auth')
 //
