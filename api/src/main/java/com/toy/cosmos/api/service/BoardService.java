@@ -54,6 +54,14 @@ public class BoardService {
             throw new AccessDeniedException("권한이 없습니다.");
             // 문제 response가 뭐가 나올까?
             /**
+             *
+             * 왜 code가 500이 나오고, message가 "권한이 없습니다." 나온다고 생각했어?
+             * {
+             *      code: 500,
+             *      message: "권한이 없습니다."
+             * }
+             */
+            /**
              * todo:
              * 문제 1)
              * response
