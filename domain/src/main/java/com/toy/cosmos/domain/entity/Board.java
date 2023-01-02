@@ -40,10 +40,6 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     @JsonManagedReference
-    Set<AttachedFile> attachedFiles;
-
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    @JsonManagedReference
     Set<Comment> comments;
 
 }

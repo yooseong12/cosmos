@@ -1,4 +1,4 @@
-package com.freshcode.clover.auth.model;
+package com.toy.cosmos.auth.model;
 
 import lombok.AccessLevel;
 import lombok.Builder;

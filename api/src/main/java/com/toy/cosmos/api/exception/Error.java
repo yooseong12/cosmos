@@ -9,7 +9,9 @@ public enum Error {
 
     NOT_FOUND_USER(1000, "user not found"),
     ALREADY_EXIST_USER(1001, "already exist user"),
-    ALREADY_EXIST_USER_FRIEND(1002, "already exist user friend");
+    ALREADY_EXIST_USER_FRIEND(1002, "already exist user friend"),
+
+    NOT_FOUND_BOARD(2001, "board not found");
 
     final Integer code;
 

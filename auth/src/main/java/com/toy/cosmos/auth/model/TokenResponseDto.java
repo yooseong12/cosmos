@@ -1,4 +1,4 @@
-package com.freshcode.clover.auth.model;
+package com.toy.cosmos.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;

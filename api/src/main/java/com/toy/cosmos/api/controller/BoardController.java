@@ -5,6 +5,7 @@ import com.toy.cosmos.api.model.response.BoardResponse;
 import com.toy.cosmos.api.model.response.Response;
 import com.toy.cosmos.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,23 +18,21 @@ import java.util.List;
 public class BoardController {
 
     /**
-     * 1. 등록(제목, 내용, 첨파[20M])
+     * 1. 등록(제목, 내용)
      * 2. 목록 조회(페이지네이션)
      * 3. 단건 조회(조회수 카운트, 좋아요, 댓글)
-     * 4. 수정(제목, 내용, 첨파[20M])
+     * 4. 수정(제목, 내용)
      * 5. 삭제
      * <p>
      * Entity
      * 1. Board
      * 2. Comment
-     * 3. AttachedFile
      */
 
     private final BoardService boardService;
 
     @PostMapping("/boards")
-    public void insertBoard(@RequestBody BoardRequest.Register request, MultipartFile file) {
-        // todo: 첨부파일 제거 controller, service, entity
+    public void insertBoard(@RequestBody BoardRequest.Register request) {
         boardService.insertBoard(request);
     }
 

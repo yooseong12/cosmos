@@ -24,8 +24,6 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final SetPath<AttachedFile, QAttachedFile> attachedFiles = this.<AttachedFile, QAttachedFile>createSet("attachedFiles", AttachedFile.class, QAttachedFile.class, PathInits.DIRECT2);
-
     public final SetPath<Comment, QComment> comments = this.<Comment, QComment>createSet("comments", Comment.class, QComment.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");

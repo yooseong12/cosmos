@@ -22,17 +22,25 @@ public class BoardResponse {
 
     String content;
 
+    String writer;
+
     Integer hits;
 
-    Integer like;
+    Integer liked;
 
     public static List<BoardResponse> of(List<Board> boards) {
         return boards.stream().map(BoardResponse::of).collect(Collectors.toList());
     }
 
-    public static BoardResponse of(Board boards) {
-        return null;
+    public static BoardResponse of(Board board) {
+        return BoardResponse.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .hits(board.getHits())
+                .liked(board.getLiked())
+                .writer(board.getUser().getNickname())
+                .build();
     }
 
 }
-

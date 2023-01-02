@@ -41,10 +41,9 @@ public class BoardRequest {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Search {
 
-        @Size(max = 50)
-        String title;
+        Integer page = 0;
 
-        String content;
+        Integer size = 5;
 
         /**
          * 몇개씩 가져올까?
@@ -52,13 +51,6 @@ public class BoardRequest {
          * @param userId
          * @return
          */
-
-        public Board toEntity(Long userId) {
-            return Board.builder()
-                    .title(title)
-                    .content(content)
-                    .user(User.builder().id(userId).build())
-                    .build();
         }
     }
-}
+

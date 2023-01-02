@@ -1,6 +1,6 @@
 package com.toy.cosmos.auth.config;
 
-import com.freshcode.clover.auth.model.TokenResponseDto;
+import com.toy.cosmos.auth.model.TokenResponseDto;
 import com.toy.cosmos.auth.exception.login.ExpiredTokenException;
 import com.toy.cosmos.auth.exception.login.InvalidTokenException;
 import com.toy.cosmos.domain.entity.User;

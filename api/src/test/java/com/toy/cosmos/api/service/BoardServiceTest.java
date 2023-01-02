@@ -4,6 +4,7 @@ import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,29 @@ public class BoardServiceTest {
 
 
         Assertions.assertEquals("새로운 제목6", board.getTitle());
+    }
+
+    @Test
+    void getBoardsTest() {
+        BoardRequest.Search request = new BoardRequest.Search();
+
+        boardService.getBoards(request);
+    }
+
+    @Test
+    @Transactional
+    void getBoardTest(){
+        Long boardId = 1L;
+
+        boardService.getBoard(boardId);
+    }
+
+    @AfterEach
+    @Test
+    void hits(){
+
+        Board board = boardRepository.getOne(1L);
+
+        Assertions.assertEquals(1, board.getHits());
     }
 }
