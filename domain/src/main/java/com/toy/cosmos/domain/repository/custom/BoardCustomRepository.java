@@ -14,4 +14,6 @@ public interface BoardCustomRepository {
 
 
     long updateHits(Long id);
+
+    long editBoard(String title, String content,Long id);
 }

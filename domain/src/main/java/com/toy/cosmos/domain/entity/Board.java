@@ -27,7 +27,6 @@ public class Board extends BaseEntity {
     User user;
 
     @NotNull
-    @Column(unique = true)
     @Size(max = 50)
     String title;
 
@@ -41,5 +40,4 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     @JsonManagedReference
     Set<Comment> comments;
-
 }

@@ -1,7 +1,6 @@
 package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.exception.board.NotFoundBoardException;
-import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.api.model.response.BoardResponse;
 import com.toy.cosmos.domain.entity.Board;
@@ -47,11 +46,10 @@ public class BoardService {
 
     public void editBoard(Long id, BoardRequest.Register request) {
         Long userId = getLoginUserId();
-        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
-        Board board = boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
-        // todo:
 
+        boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
 
+        boardRepository.editBoard(request.getTitle(), request.getContent(), id);
     }
 
     public void deleteBoard(Long id) {

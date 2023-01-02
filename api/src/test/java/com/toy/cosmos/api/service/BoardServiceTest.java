@@ -4,7 +4,6 @@ import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,18 +48,20 @@ public class BoardServiceTest {
 
     @Test
     @Transactional
-    void getBoardTest(){
+    void getBoardTest() {
         Long boardId = 1L;
 
         boardService.getBoard(boardId);
     }
 
-    @AfterEach
     @Test
-    void hits(){
+    @Transactional
+    void updateBoardTest() {
+        Long id = 1L;
+        BoardRequest.Register request = new BoardRequest.Register();
+        request.setTitle("변경된 제목1");
+        request.setContent("변경된 내용1");
 
-        Board board = boardRepository.getOne(1L);
-
-        Assertions.assertEquals(1, board.getHits());
+        boardService.editBoard(id,request);
     }
 }

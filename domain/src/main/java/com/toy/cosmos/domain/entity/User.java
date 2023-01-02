@@ -52,6 +52,9 @@ public class User extends BaseEntity implements UserDetails {
     @JsonManagedReference
     Set<UserFriend> userFriends;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<Board> boards;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.getAuthority().name()));
