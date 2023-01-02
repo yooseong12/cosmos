@@ -2,23 +2,32 @@ package com.toy.cosmos.domain.repository.custom.impl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAUpdateClause;
-import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.custom.BoardCustomRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static com.toy.cosmos.domain.entity.QBoard.board;
 import static com.toy.cosmos.domain.entity.QUser.user;
-import static com.toy.cosmos.domain.entity.QUserFriend.userFriend;
 
 @RequiredArgsConstructor
 public class BoardCustomRepositoryImpl implements BoardCustomRepository {
 
     private final EntityManager entityManager;
 
+
+    @Override
+    public Optional<Board> findBoardWithUserBy(Long id) {
+        return Optional.ofNullable(new JPAQuery<Board>(entityManager)
+                .from(board)
+                .join(board.user, user)
+                .fetchJoin()
+                .where(board.id.eq(id))
+                .fetchOne());
+    }
 
     @Override
     public List<Board> findBoardListByOrderByIdDesc(Integer page, Integer size) {
@@ -29,11 +38,10 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public long updateHits(Long userId, Long boardId) {
+    public long updateHits(Long id) {
         return new JPAUpdateClause(entityManager, board)
                 .set(board.hits, board.hits.add(1))
-                .where(board.id.eq(boardId)
-                        .and(board.user.id.ne(userId)))
+                .where(board.id.eq(id))
                 .execute();
     }
 }

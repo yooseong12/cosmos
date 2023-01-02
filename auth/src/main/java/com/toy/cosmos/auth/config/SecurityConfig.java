@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(
                         // swagger
-                        "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**", "/actuator/**", "/sikdae/**"
+                        "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**", "/actuator/**"
                 );
     }
 

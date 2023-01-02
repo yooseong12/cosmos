@@ -1,3 +1,2 @@
 rootProject.name = 'cosmos'
 include('domain', 'api', 'auth')
-//

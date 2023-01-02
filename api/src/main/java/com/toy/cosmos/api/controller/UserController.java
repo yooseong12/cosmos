@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public Response<List<UserResponse.UserInfo>> getFriends(UserRequest.Friend request) {
         return Response.<List<UserResponse.UserInfo>>builder()
                 .code(HttpStatus.OK.value())
