@@ -37,7 +37,7 @@ public class Board extends BaseEntity {
 
     Integer liked;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     Set<Comment> comments;
 }

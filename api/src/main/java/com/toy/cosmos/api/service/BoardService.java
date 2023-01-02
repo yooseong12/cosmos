@@ -7,9 +7,10 @@ import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.BoardRepository;
 import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -44,19 +45,43 @@ public class BoardService {
         return BoardResponse.of(board);
     }
 
+    @Transactional
     public void editBoard(Long id, BoardRequest.Register request) {
         Long userId = getLoginUserId();
+        Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 
-        boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
+        if (!userId.equals(board.getUser().getId())) {
+            throw new AccessDeniedException("권한이 없습니다.");
+            // 문제 response가 뭐가 나올까?
+            /**
+             * todo:
+             * 문제 1)
+             * response
+             * {
+             *      code: 9003,
+             *      message: "권한이 없습니다."
+             * }
+             */
+        }
 
-        boardRepository.editBoard(request.getTitle(), request.getContent(), id);
+        board.setTitle(request.getTitle());
+        board.setContent(request.getContent());
+        boardRepository.save(board);
     }
 
-    public void deleteBoard(Long id) {
-        // todo:
+    @Transactional
+    public void deleteBoard(Long id) { // todo: 삭제 시 status 변경
+        Long userId = getLoginUserId();
+        Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
+
+        if (!userId.equals(board.getUser().getId())) {
+            throw new AccessDeniedException("권한이 없습니다.");
+        }
+
+        boardRepository.delete(board);
     }
 
     private Long getLoginUserId() {
-        return 2L;
+        return 1L;
     }
 }

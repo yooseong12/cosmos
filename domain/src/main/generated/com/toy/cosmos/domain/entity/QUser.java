@@ -24,6 +24,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.toy.cosmos.domain.value.Authority> authority = createEnum("authority", com.toy.cosmos.domain.value.Authority.class);
 
+    public final ListPath<Board, QBoard> boards = this.<Board, QBoard>createList("boards", Board.class, QBoard.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> createdAt = _super.createdAt;
 

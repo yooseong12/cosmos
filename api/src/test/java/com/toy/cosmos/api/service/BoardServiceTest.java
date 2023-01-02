@@ -64,4 +64,10 @@ public class BoardServiceTest {
 
         boardService.editBoard(id,request);
     }
+
+    @Test
+    void deleteBoardTest() {
+        Long id = 1L;
+        boardService.deleteBoard(id);
+    }
 }

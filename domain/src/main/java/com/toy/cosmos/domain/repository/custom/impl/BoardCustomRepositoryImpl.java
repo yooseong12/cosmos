@@ -46,11 +46,14 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public long editBoard(String title, String content, Long id) {
+    public long editBoard(Long id, Long userId, String title, String content) {
         return new JPAUpdateClause(entityManager, board)
                 .set(board.title, board.title.append(title))
                 .set(board.content, board.content.append(content))
-                .where(board.id.eq(id))
+                .where(
+                        board.id.eq(id),
+                        board.user.id.eq(userId)
+                )
                 .execute();
     }
 }

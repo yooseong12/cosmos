@@ -38,11 +38,12 @@ public class BoardRepositoryTest {
     @Transactional
     public void editBoardTest() {
         Long id = 1L;
+        Long userId = 1L;
         String title = "변경된 제목1";
         String content = "변경된 내용1";
         Board board = boardRepository.findById(id).get();
 
-        boardRepository.editBoard(title, content, id);
+        boardRepository.editBoard(id, userId, title, content);
 
         Assertions.assertEquals("변경된 제목1", board.getTitle());
     }

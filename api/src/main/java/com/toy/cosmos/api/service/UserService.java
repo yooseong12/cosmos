@@ -79,4 +79,7 @@ public class UserService {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
         userRepository.blockedFriend(userId, friendId);
     }
+
+    // todo: 회원탈퇴
+
 }

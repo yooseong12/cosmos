@@ -51,6 +51,6 @@ public class BoardRequest {
          * @param userId
          * @return
          */
-        }
     }
+}
 
