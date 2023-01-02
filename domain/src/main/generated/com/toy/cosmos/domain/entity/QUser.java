@@ -39,6 +39,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phone = createString("phone");
 
+    public final EnumPath<com.toy.cosmos.domain.common.Status.User> status = createEnum("status", com.toy.cosmos.domain.common.Status.User.class);
+
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> updatedAt = _super.updatedAt;
 

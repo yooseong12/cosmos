@@ -43,13 +43,14 @@ public class TokenProvider {
 
     private Key key;
 
-    @Value("${security.jwt.key}")
-    String secretKey;
+    //todo: 자꾸 오류남 Could not resolve placeholder 'security.jwt.key' in value "${security.jwt.key}"
+//    @Value("${security.jwt.key}")
+//    String secretKey;
 
-    @PostConstruct
-    public void init() {
-        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
-    }
+//    @PostConstruct
+//    public void init() {
+//        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+//    }
 
     public TokenResponseDto generateTokenResponse(User user, boolean tmpPasswordUsed, boolean isJoin) {
         long now = new Date().getTime();

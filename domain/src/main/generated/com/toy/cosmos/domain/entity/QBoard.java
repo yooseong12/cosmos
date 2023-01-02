@@ -37,6 +37,8 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Integer> liked = createNumber("liked", Integer.class);
 
+    public final EnumPath<com.toy.cosmos.domain.common.Status.Board> status = createEnum("status", com.toy.cosmos.domain.common.Status.Board.class);
+
     public final StringPath title = createString("title");
 
     //inherited

@@ -2,6 +2,7 @@ package com.toy.cosmos.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.toy.cosmos.domain.common.CommonConstant;
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.value.Authority;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -47,6 +48,9 @@ public class User extends BaseEntity implements UserDetails {
     @NotNull
     @Enumerated(EnumType.STRING)
     Authority authority;
+
+    @Enumerated(EnumType.STRING)
+    Status.User status;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference

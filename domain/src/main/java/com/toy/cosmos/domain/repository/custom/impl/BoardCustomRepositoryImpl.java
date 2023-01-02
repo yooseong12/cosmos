@@ -2,6 +2,7 @@ package com.toy.cosmos.domain.repository.custom.impl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAUpdateClause;
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.custom.BoardCustomRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     public List<Board> findBoardListByOrderByIdDesc(Integer page, Integer size) {
         return new JPAQuery<Board>(entityManager)
                 .from(board)
+                .where(board.status.eq(Status.Board.NORMAL))
                 .limit(size).offset(page)
                 .fetch();
     }
@@ -46,14 +48,10 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public long editBoard(Long id, Long userId, String title, String content) {
+    public long deleteBoard(Long id) {
         return new JPAUpdateClause(entityManager, board)
-                .set(board.title, board.title.append(title))
-                .set(board.content, board.content.append(content))
-                .where(
-                        board.id.eq(id),
-                        board.user.id.eq(userId)
-                )
+                .set(board.status, Status.Board.DELETE)
+                .where(board.id.eq(id).and(board.status.eq(Status.Board.NORMAL)))
                 .execute();
     }
 }

@@ -37,12 +37,15 @@ public class UserRequest {
         @Pattern(regexp = CommonConstant.RegExp.PHONE)
         String phone;
 
+        Status.User status = Status.User.NORMAL;
+
         public User toEntity() {
             return User.builder()
                     .email(email)
                     .password(password)
                     .nickname(nickname)
                     .phone(phone)
+                    .status(status)
                     .build();
         }
     }
@@ -59,12 +62,7 @@ public class UserRequest {
     @Getter
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    // todo: 이상하다
     public static class FindFriend {
-
-        Integer page = 0;
-
-        Integer size = 5;
 
         String email;
 

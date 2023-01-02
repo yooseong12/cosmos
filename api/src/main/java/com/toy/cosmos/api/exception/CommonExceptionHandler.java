@@ -1,5 +1,6 @@
 package com.toy.cosmos.api.exception;
 
+import com.toy.cosmos.api.exception.board.BoardException;
 import com.toy.cosmos.api.exception.user.UserException;
 import com.toy.cosmos.api.model.response.Response;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,16 @@ public class CommonExceptionHandler {
                 .message(e.getError().getMessage())
                 .build();
     }
+
+    @ExceptionHandler(BoardException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response<Void> boardExceptionHandler(BoardException e) {
+        return Response.<Void>builder()
+                .code(e.getError().code)
+                .message(e.getError().getMessage())
+                .build();
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

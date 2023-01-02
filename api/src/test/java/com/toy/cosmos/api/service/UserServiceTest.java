@@ -5,7 +5,6 @@ import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
-import com.toy.cosmos.domain.repository.UserFriendRepository;
 import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -14,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +38,7 @@ class UserServiceTest {
     void joinTest() {
         // given
         UserRequest.Join request = new UserRequest.Join();
-        request.setEmail("d@naver.com");
+        request.setEmail("o@naver.com");
         request.setPassword("1234");
         request.setNickname("아무개");
         request.setPhone("0101234564");
@@ -48,19 +47,25 @@ class UserServiceTest {
         userService.join(request);
 
         // then
-
     }
 
     @Test
     @Transactional
-        // todo: 좀더 알아보기
+    void withdrawUserTest() {
+        Long id = 1L;
+
+        userService.withdrawUser(id);
+    }
+
+    @Test
+    @Transactional
     void findUserWithUserFriendsTest() {
         Long id = 1L;
 
-        User 김유성 = userRepository.getOne(id);
-        Set<UserFriend> 유성이친구들 = 김유성.getUserFriends();
+        User user = userRepository.getOne(id);
+        Set<UserFriend> userFriends = user.getUserFriends();
 
-        Assertions.assertEquals(2, 유성이친구들.size());
+        Assertions.assertEquals(3, userFriends.size());
     }
 
     @Test
@@ -106,10 +111,11 @@ class UserServiceTest {
 
         userService.deleteFriend(userId, friendId);
 
-        Assertions.assertEquals(1, userFriends.size());
+        Assertions.assertEquals(2, userFriends.size());
     }
 
     @Test
+    @Transactional
     void blockedFriendTest() {
         Long userId = 1L;
         Long friendId = 2L;
@@ -119,7 +125,7 @@ class UserServiceTest {
 
     @Test
     void requestFriendTest() {
-        Long friendId = 3L;
+        Long friendId = 4L;
 
         userService.requestFriend(friendId);
     }

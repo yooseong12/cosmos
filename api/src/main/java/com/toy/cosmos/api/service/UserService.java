@@ -80,6 +80,8 @@ public class UserService {
         userRepository.blockedFriend(userId, friendId);
     }
 
-    // todo: 회원탈퇴
+    public void withdrawUser(Long id) {
+        userRepository.withdrawByUserId(id);
+    }
 
 }

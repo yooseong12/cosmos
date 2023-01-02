@@ -1,5 +1,6 @@
 package com.toy.cosmos.api.model.request;
 
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.entity.User;
 import lombok.AccessLevel;
@@ -26,10 +27,13 @@ public class BoardRequest {
         @NotNull
         String content;
 
+        Status.Board status = Status.Board.NORMAL;
+
         public Board toEntity(Long userId) {
             return Board.builder()
                     .title(title)
                     .content(content)
+                    .status(status)
                     .user(User.builder().id(userId).build())
                     .build();
         }

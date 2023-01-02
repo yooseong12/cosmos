@@ -48,6 +48,14 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
         );
     }
 
+    @Override
+    public long withdrawByUserId(Long id) {
+        return new JPAUpdateClause(entityManager, user)
+                .set(user.status, Status.User.DELETE)
+                .where(user.id.eq(id).and(user.status.eq(Status.User.NORMAL)))
+                .execute();
+    }
+
     /**
      * delete
      * from user u join user_friend uf
@@ -62,7 +70,6 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
                 .where(user.id.eq(userId)
                         .and(userFriend.friendId.eq(friendId)))
                 .execute();
-
     }
 
     @Override

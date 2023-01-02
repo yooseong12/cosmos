@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @EntityScan(basePackages = {"com.toy.cosmos"})
@@ -42,8 +43,11 @@ public class BoardServiceTest {
     @Test
     void getBoardsTest() {
         BoardRequest.Search request = new BoardRequest.Search();
+        List<Board> boards = boardRepository.findAll();
 
         boardService.getBoards(request);
+
+        Assertions.assertEquals(13, boards.size());
     }
 
     @Test
@@ -56,7 +60,7 @@ public class BoardServiceTest {
 
     @Test
     @Transactional
-    void updateBoardTest() {
+    void editBoardTest() {
         Long id = 1L;
         BoardRequest.Register request = new BoardRequest.Register();
         request.setTitle("변경된 제목1");
@@ -68,6 +72,7 @@ public class BoardServiceTest {
     @Test
     void deleteBoardTest() {
         Long id = 1L;
+
         boardService.deleteBoard(id);
     }
 }
