@@ -43,14 +43,30 @@ public class TokenProvider {
 
     private Key key;
 
-    //todo: 자꾸 오류남 Could not resolve placeholder 'security.jwt.key' in value "${security.jwt.key}"
-//    @Value("${security.jwt.key}")
-//    String secretKey;
+    //todo: 현준
 
-//    @PostConstruct
-//    public void init() {
-//        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
-//    }
+    /**
+     * 현상
+     * ApiApplication 을 실행하면 Could not resolve placeholder 오류 발생
+     *
+     * 이유
+     * ApiApplication 이 application-auth.yml 를 읽어오지 못함.
+     *
+     * 해결방법
+     * ApiApplication 이 application-test.yml 을 불러와야함
+     *
+     * 이유와 해결 방법은 알아 냈는데, Test 환경에서는 ActiveProfile 로 application-test.yml 을 불러오는 것을 확인했습니다.
+     * 하지만 ApiApplication 이 실행 될 때에는 어떻게 application-test.yml 을 불러오는지 아무리 찾아봐도 모르겠습니다.
+     * 다른 오류도 이와 같이 application-test.yml 을 불러오지 못해서 생긴 오류 입니다.
+      */
+
+    @Value("${security.jwt.key}")
+    String secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+    }
 
     public TokenResponseDto generateTokenResponse(User user, boolean tmpPasswordUsed, boolean isJoin) {
         long now = new Date().getTime();

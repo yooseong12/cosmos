@@ -13,7 +13,7 @@ import javax.validation.ValidationException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
 
@@ -24,7 +24,7 @@ public class UserController {
         userService.join(request);
     }
 
-    @PostMapping("/status/{id:[\\d]+}")
+    @PostMapping("/users/status/{id:[\\d]+}")
     public void withdrawUser(@PathVariable Long id) {
         userService.withdrawUser(id);
     }

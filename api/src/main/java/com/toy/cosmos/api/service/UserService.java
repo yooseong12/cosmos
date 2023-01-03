@@ -81,6 +81,7 @@ public class UserService {
     }
 
     public void withdrawUser(Long id) {
+        userRepository.findById(id).orElseThrow(NotFoundUserException::new);
         userRepository.withdrawByUserId(id);
     }
 
