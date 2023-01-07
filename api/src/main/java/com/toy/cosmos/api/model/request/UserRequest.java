@@ -1,6 +1,7 @@
 package com.toy.cosmos.api.model.request;
 
 import com.toy.cosmos.domain.common.CommonConstant;
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,13 +37,37 @@ public class UserRequest {
         @Pattern(regexp = CommonConstant.RegExp.PHONE)
         String phone;
 
+        Status.User status = Status.User.NORMAL;
+
         public User toEntity() {
             return User.builder()
                     .email(email)
                     .password(password)
                     .nickname(nickname)
                     .phone(phone)
+                    .status(status)
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class Friend {
+
+        Status.UserFriend status;
+
+    }
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class FindFriend {
+
+        String email;
+
+        String phone;
+
+    }
+
 }

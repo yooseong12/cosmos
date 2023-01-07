@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -21,6 +22,10 @@ public class QUser extends EntityPathBase<User> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
+    public final EnumPath<com.toy.cosmos.domain.value.Authority> authority = createEnum("authority", com.toy.cosmos.domain.value.Authority.class);
+
+    public final ListPath<Board, QBoard> boards = this.<Board, QBoard>createList("boards", Board.class, QBoard.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> createdAt = _super.createdAt;
 
@@ -34,8 +39,12 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phone = createString("phone");
 
+    public final EnumPath<com.toy.cosmos.domain.common.Status.User> status = createEnum("status", com.toy.cosmos.domain.common.Status.User.class);
+
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> updatedAt = _super.updatedAt;
+
+    public final SetPath<UserFriend, QUserFriend> userFriends = this.<UserFriend, QUserFriend>createSet("userFriends", UserFriend.class, QUserFriend.class, PathInits.DIRECT2);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
