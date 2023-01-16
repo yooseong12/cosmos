@@ -1,5 +1,6 @@
 package com.toy.cosmos.api.model.request;
 
+import com.toy.cosmos.auth.model.LoginVo;
 import com.toy.cosmos.domain.common.CommonConstant;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
@@ -15,6 +16,28 @@ import javax.validation.constraints.Size;
 
 @UtilityClass
 public class UserRequest {
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class Login {
+
+        @NotNull
+        @Size(max = 50)
+        @Pattern(regexp = CommonConstant.RegExp.EMAIL)
+        String email;
+
+        @NotNull
+        @Size(max = 255)
+        String password;
+
+        public LoginVo toLoginVo() {
+            return LoginVo.builder()
+                    .email(email)
+                    .password(password)
+                    .build();
+        }
+    }
 
     @Getter
     @Setter

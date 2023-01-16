@@ -2,9 +2,12 @@ package com.toy.cosmos.api.service;
 
 import com.toy.cosmos.api.exception.user.AlreadyExistUserException;
 import com.toy.cosmos.api.exception.user.AlreadyExistUserFriendException;
+import com.toy.cosmos.api.exception.user.InvalidPasswordException;
 import com.toy.cosmos.api.exception.user.NotFoundUserException;
 import com.toy.cosmos.api.model.request.UserRequest;
 import com.toy.cosmos.api.model.response.UserResponse;
+import com.toy.cosmos.auth.model.TokenResponseDto;
+import com.toy.cosmos.auth.service.LoginService;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
 import com.toy.cosmos.domain.entity.UserFriend;
@@ -22,6 +25,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final UserFriendRepository userFriendRepository;
+
+    private final LoginService loginService;
 
     public void join(UserRequest.Join request) {
         userRepository.findByEmail(request.getEmail()).ifPresent(user -> {
@@ -78,6 +83,14 @@ public class UserService {
     public void blockedFriend(Long userId, Long friendId) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
         userRepository.blockedFriend(userId, friendId);
+    }
+
+    public TokenResponseDto login(UserRequest.Login request) {
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(NotFoundUserException::new);
+        if (!request.getPassword().equals(user.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+        return loginService.generateTokenResponse(user);
     }
 
     // todo: 회원탈퇴

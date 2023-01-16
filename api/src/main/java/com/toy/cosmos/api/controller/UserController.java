@@ -4,8 +4,10 @@ import com.toy.cosmos.api.model.request.UserRequest;
 import com.toy.cosmos.api.model.response.Response;
 import com.toy.cosmos.api.model.response.UserResponse;
 import com.toy.cosmos.api.service.UserService;
+import com.toy.cosmos.auth.model.TokenResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @PostMapping("/login")
+    public TokenResponseDto login(@RequestBody UserRequest.Login request) {
+        return userService.login(request);
+    }
+
     @PostMapping("/join")
     public void join(UserRequest.Join request) {
         userService.join(request);
@@ -30,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public Response<List<UserResponse.UserInfo>> getFriends(UserRequest.Friend request) {
         return Response.<List<UserResponse.UserInfo>>builder()
                 .code(HttpStatus.OK.value())
