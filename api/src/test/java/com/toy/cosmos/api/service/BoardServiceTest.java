@@ -43,6 +43,7 @@ public class BoardServiceTest {
     void getBoardsTest() {
         BoardRequest.Search request = new BoardRequest.Search();
 
+
         boardService.getBoards(request);
     }
 
@@ -50,6 +51,7 @@ public class BoardServiceTest {
     @Transactional
     void getBoardTest() {
         Long boardId = 1L;
+
 
         boardService.getBoard(boardId);
     }

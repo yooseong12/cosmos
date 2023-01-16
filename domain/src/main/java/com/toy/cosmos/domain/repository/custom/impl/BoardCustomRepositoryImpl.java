@@ -34,6 +34,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     public List<Board> findBoardListByOrderByIdDesc(Integer page, Integer size) {
         return new JPAQuery<Board>(entityManager)
                 .from(board)
+                .where(board.status.eq(Status.Board.NORMAL))
                 .limit(size).offset(page)
                 .fetch();
     }

@@ -1,8 +1,6 @@
 spring:
   application:
     name: api
-  profiles:
-    active: test
   jackson:
     date-format: 'yyyy-MM-dd HH:mm:ss'
     time-zone: "Asia/Seoul"

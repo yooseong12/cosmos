@@ -31,6 +31,11 @@ public class UserController {
         userService.join(request);
     }
 
+    @PostMapping("/withdraw/{id:[\\d]+}")
+    public void withdrawUser(@PathVariable Long id) {
+        userService.withdrawUser(id);
+    }
+
     @PostMapping("/friend/{id:[\\d]+}")
     public void requestFriend(@PathVariable Long id) {
         userService.requestFriend(id);

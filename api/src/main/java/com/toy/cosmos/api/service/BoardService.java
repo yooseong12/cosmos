@@ -31,6 +31,7 @@ public class BoardService {
         return BoardResponse.of(boards);
     }
 
+    @Transactional
     public BoardResponse getBoard(Long id) {
         Long userId = getLoginUserId();
         Board board = boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
