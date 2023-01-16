@@ -93,6 +93,8 @@ public class UserService {
         return loginService.generateTokenResponse(user);
     }
 
-    // todo: 회원탈퇴
-
+    public void withdrawUser(Long id) {
+        userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+        userRepository.withdrawByUserId(id);
+    }
 }

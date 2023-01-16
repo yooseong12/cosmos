@@ -1,6 +1,7 @@
 package com.toy.cosmos.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.toy.cosmos.domain.common.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -36,6 +37,9 @@ public class Board extends BaseEntity {
     Integer hits;
 
     Integer liked;
+
+    @Enumerated(EnumType.STRING)
+    Status.Board status;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference

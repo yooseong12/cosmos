@@ -1,13 +1,12 @@
 package com.toy.cosmos.api.service;
 
+import com.toy.cosmos.api.exception.board.AccessDeniedException;
 import com.toy.cosmos.api.exception.board.NotFoundBoardException;
 import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.api.model.response.BoardResponse;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.BoardRepository;
-import com.toy.cosmos.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +18,6 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-
-    private final UserRepository userRepository;
 
     @Transactional
     public void insertBoard(BoardRequest.Register request) {
@@ -51,25 +48,7 @@ public class BoardService {
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
-            throw new AccessDeniedException("권한이 없습니다.");
-            // 문제 response가 뭐가 나올까?
-            /**
-             *
-             * 왜 code가 500이 나오고, message가 "권한이 없습니다." 나온다고 생각했어?
-             * {
-             *      code: 500,
-             *      message: "권한이 없습니다."
-             * }
-             */
-            /**
-             * todo:
-             * 문제 1)
-             * response
-             * {
-             *      code: 9003,
-             *      message: "권한이 없습니다."
-             * }
-             */
+            throw new AccessDeniedException();
         }
 
         board.setTitle(request.getTitle());
@@ -78,15 +57,15 @@ public class BoardService {
     }
 
     @Transactional
-    public void deleteBoard(Long id) { // todo: 삭제 시 status 변경
+    public void deleteBoard(Long id) {
         Long userId = getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException();
         }
 
-        boardRepository.delete(board);
+        boardRepository.deleteBoard(id);
     }
 
     private Long getLoginUserId() {

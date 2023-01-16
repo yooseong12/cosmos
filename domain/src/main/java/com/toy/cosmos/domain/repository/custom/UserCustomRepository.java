@@ -16,4 +16,6 @@ public interface UserCustomRepository {
 
     long blockedFriend(Long userId, Long friendId);
 
+    long withdrawByUserId(Long id);
+
 }

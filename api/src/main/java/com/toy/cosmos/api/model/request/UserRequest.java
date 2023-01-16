@@ -82,13 +82,7 @@ public class UserRequest {
     @Getter
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    // todo: 이상하다
     public static class FindFriend {
-
-        Integer page = 0;
-
-        Integer size = 5;
-
         String email;
 
         String phone;

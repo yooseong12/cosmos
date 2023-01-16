@@ -74,4 +74,12 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
                         .and(userFriend.status.eq(Status.UserFriend.FOLLOW)))
                 .execute();
     }
+
+    @Override
+    public long withdrawByUserId(Long id) {
+        return new JPAUpdateClause(entityManager, user)
+                .set(user.status, Status.User.DELETE)
+                .where(user.id.eq(id).and(user.status.eq(Status.User.NORMAL)))
+                .execute();
+    }
 }

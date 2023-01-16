@@ -21,4 +21,6 @@ public interface BoardCustomRepository {
                    @NotNull Long userId,
                    @NotNull String title,
                    @NotNull String content);
+
+    long deleteBoard(Long id);
 }
