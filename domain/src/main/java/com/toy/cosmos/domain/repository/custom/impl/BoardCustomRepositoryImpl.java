@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.toy.cosmos.domain.entity.QBoard.board;
+import static com.toy.cosmos.domain.entity.QComment.comment;
 import static com.toy.cosmos.domain.entity.QUser.user;
 
 @RequiredArgsConstructor
@@ -39,6 +40,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                 .fetch();
     }
 
+
     @Override
     public long updateHits(Long id) {
         return new JPAUpdateClause(entityManager, board)
@@ -64,6 +66,16 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
         return new JPAUpdateClause(entityManager, board)
                 .set(board.status, Status.Board.DELETE)
                 .where(board.id.eq(id).and(board.status.eq(Status.Board.NORMAL)))
+                .execute();
+    }
+
+    @Override
+    public long deleteComment(Long boardId, Long commentId) {
+        return new JPAUpdateClause(entityManager, comment)
+                .set(comment.status, Status.Comment.DELETE)
+                .where(comment.id.eq(commentId)
+                        .and(comment.board.id.eq(boardId))
+                        .and(comment.status.eq(Status.Comment.NORMAL)))
                 .execute();
     }
 }

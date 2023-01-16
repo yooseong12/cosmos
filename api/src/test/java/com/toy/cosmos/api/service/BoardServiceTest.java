@@ -64,12 +64,29 @@ public class BoardServiceTest {
         request.setTitle("변경된 제목1");
         request.setContent("변경된 내용1");
 
-        boardService.editBoard(id,request);
+        boardService.editBoard(id, request);
     }
 
     @Test
     void deleteBoardTest() {
         Long id = 1L;
         boardService.deleteBoard(id);
+    }
+
+    @Test
+    void createCommentTest() {
+        Long id = 1L;
+        BoardRequest.Comments request = new BoardRequest.Comments();
+        request.setContent("댓글입니다");
+
+        boardService.createComment(id, request);
+    }
+
+    @Test
+    void deleteCommentTest() {
+        Long boardId = 1L;
+        Long commentId = 1L;
+
+        boardService.deleteComment(boardId, commentId);
     }
 }

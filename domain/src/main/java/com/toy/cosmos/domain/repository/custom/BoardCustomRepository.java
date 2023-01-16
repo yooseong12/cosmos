@@ -23,4 +23,6 @@ public interface BoardCustomRepository {
                    @NotNull String content);
 
     long deleteBoard(Long id);
+
+    long deleteComment(Long boardId,Long commentId);
 }

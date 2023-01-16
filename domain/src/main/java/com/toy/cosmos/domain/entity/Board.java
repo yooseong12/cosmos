@@ -42,6 +42,7 @@ public class Board extends BaseEntity {
     Status.Board status;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OrderBy("id desc")
     @JsonManagedReference
     Set<Comment> comments;
 }

@@ -1,6 +1,8 @@
 package com.toy.cosmos.api.model.request;
 
+import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.Board;
+import com.toy.cosmos.domain.entity.Comment;
 import com.toy.cosmos.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class BoardRequest {
                     .title(title)
                     .content(content)
                     .user(User.builder().id(userId).build())
+                    .status(Status.Board.NORMAL)
                     .build();
         }
     }
@@ -51,6 +54,23 @@ public class BoardRequest {
          * @param userId
          * @return
          */
+    }
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class Comments {
+
+        @NotNull
+        String content;
+
+        public Comment toEntity(Long id) {
+            return Comment.builder()
+                    .content(content)
+                    .status(Status.Comment.NORMAL)
+                    .board(Board.builder().id(id).build())
+                    .build();
+        }
     }
 }
 

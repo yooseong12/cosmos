@@ -16,4 +16,9 @@ public class Status {
         NORMAL,
         DELETE
     }
+
+    public enum Comment {
+        NORMAL,
+        DELETE
+    }
 }
