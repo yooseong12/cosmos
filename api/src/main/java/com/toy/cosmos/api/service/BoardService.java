@@ -23,7 +23,7 @@ public class BoardService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void insertBoard(BoardRequest.Register request) {
+    public void insertBoard(BoardRequest.Post request) {
         Long userId = getLoginUserId();
         boardRepository.save(request.toEntity(userId));
     }
@@ -47,7 +47,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void editBoard(Long id, BoardRequest.Register request) {
+    public void editBoard(Long id, BoardRequest.Post request) {
         Long userId = getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 

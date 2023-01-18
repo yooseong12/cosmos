@@ -30,7 +30,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/boards")
-    public void insertBoard(@RequestBody BoardRequest.Register request) {
+    public void insertBoard(@RequestBody BoardRequest.Post request) {
         boardService.insertBoard(request);
     }
 
@@ -51,7 +51,7 @@ public class BoardController {
     }
 
     @PatchMapping("/boards/{id:[\\d]+}")
-    public Response<Void> editBoard(@PathVariable Long id, BoardRequest.Register request) {
+    public Response<Void> editBoard(@PathVariable Long id, BoardRequest.Post request) {
         boardService.editBoard(id, request);
         return Response.<Void>builder().build();
     }
@@ -70,7 +70,7 @@ public class BoardController {
 
     @PostMapping("/comment/status/{boardId:[\\d]+}/{commentId:[\\d]+}")
     public Response<Void> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
-        boardService.deleteComment(boardId,commentId);
+        boardService.deleteComment(boardId, commentId);
         return Response.<Void>builder().build();
     }
 

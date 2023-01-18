@@ -19,7 +19,7 @@ public class BoardRequest {
     @Getter
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    public static class Register { // todo: renaming
+    public static class Post { // todo: renaming check
 
         @NotNull
         @Size(max = 50)
