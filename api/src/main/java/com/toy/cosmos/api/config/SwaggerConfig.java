@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -32,7 +34,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 @Configuration
 @RequiredArgsConstructor
-public class SwaggerConfig {
+public class SwaggerConfig implements WebMvcConfigurer {
 
     private final TypeResolver typeResolver;
 
@@ -51,7 +53,6 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.toy.cosmos.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
-                .pathMapping("/")
                 .directModelSubstitute(LocalDate.class, String.class)
                 .genericModelSubstitutes(ResponseEntity.class)
                 .alternateTypeRules(
@@ -99,5 +100,10 @@ public class SwaggerConfig {
                 .supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
                 .validatorUrl(null)
                 .build();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/", "/swagger-ui/index.html");
     }
 }
