@@ -70,6 +70,7 @@ public class UserRequest {
         }
     }
 
+
     @Getter
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)

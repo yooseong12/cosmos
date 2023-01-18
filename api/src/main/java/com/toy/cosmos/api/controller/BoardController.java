@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -60,6 +59,18 @@ public class BoardController {
     @DeleteMapping("/boards/{id:[\\d]+}")
     public Response<Void> deleteBoard(@PathVariable Long id) {
         boardService.deleteBoard(id);
+        return Response.<Void>builder().build();
+    }
+
+    @PostMapping("/comment/{id:[\\d]+}")
+    public Response<Void> createComment(@PathVariable Long id, BoardRequest.Comments request) {
+        boardService.createComment(id, request);
+        return Response.<Void>builder().build();
+    }
+
+    @PostMapping("/comment/status/{boardId:[\\d]+}/{commentId:[\\d]+}")
+    public Response<Void> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
+        boardService.deleteComment(boardId,commentId);
         return Response.<Void>builder().build();
     }
 

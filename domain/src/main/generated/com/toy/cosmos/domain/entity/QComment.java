@@ -33,6 +33,8 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final EnumPath<com.toy.cosmos.domain.common.Status.Comment> status = createEnum("status", com.toy.cosmos.domain.common.Status.Comment.class);
+
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> updatedAt = _super.updatedAt;
 

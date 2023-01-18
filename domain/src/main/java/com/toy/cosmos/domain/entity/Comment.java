@@ -1,5 +1,7 @@
 package com.toy.cosmos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.toy.cosmos.domain.common.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,5 +26,9 @@ public class Comment extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
+    @JsonBackReference
     Board board;
+
+    @Enumerated(EnumType.STRING)
+    Status.Comment status;
 }
