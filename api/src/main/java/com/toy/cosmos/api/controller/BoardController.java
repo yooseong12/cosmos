@@ -30,28 +30,28 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/boards")
-    public void insertBoard(@RequestBody BoardRequest.Post request) {
+    public void insertBoard(@RequestBody BoardRequest.Register request) {
         boardService.insertBoard(request);
     }
 
     @GetMapping("/boards")
-    public Response<List<BoardResponse>> getBoards(BoardRequest.Search request) {
-        return Response.<List<BoardResponse>>builder()
+    public Response<List<BoardResponse.GetMany>> getBoards(BoardRequest.Search request) {
+        return Response.<List<BoardResponse.GetMany>>builder()
                 .code(HttpStatus.OK.value())
                 .data(boardService.getBoards(request))
                 .build();
     }
 
     @GetMapping("/boards/{id:[\\d]+}")
-    public Response<BoardResponse> getBoard(@PathVariable Long id) {
-        return Response.<BoardResponse>builder()
+    public Response<BoardResponse.GetOne> getBoard(@PathVariable Long id) {
+        return Response.<BoardResponse.GetOne>builder()
                 .code(HttpStatus.OK.value())
                 .data(boardService.getBoard(id))
                 .build();
     }
 
     @PatchMapping("/boards/{id:[\\d]+}")
-    public Response<Void> editBoard(@PathVariable Long id, BoardRequest.Post request) {
+    public Response<Void> editBoard(@PathVariable Long id, BoardRequest.Register request) {
         boardService.editBoard(id, request);
         return Response.<Void>builder().build();
     }

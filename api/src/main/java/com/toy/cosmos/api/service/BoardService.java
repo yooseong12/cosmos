@@ -23,19 +23,19 @@ public class BoardService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void insertBoard(BoardRequest.Post request) {
+    public void insertBoard(BoardRequest.Register request) {
         Long userId = getLoginUserId();
         boardRepository.save(request.toEntity(userId));
     }
 
-    public List<BoardResponse> getBoards(BoardRequest.Search request) {
+    public List<BoardResponse.GetMany> getBoards(BoardRequest.Search request) {
         List<Board> boards = boardRepository.findBoardListByOrderByIdDesc(request.getPage(), request.getSize());
 
-        return BoardResponse.ofs(boards);
+        return BoardResponse.GetMany.of(boards);
     }
 
     @Transactional
-    public BoardResponse getBoard(Long id) {
+    public BoardResponse.GetOne getBoard(Long id) {
         Long userId = getLoginUserId();
         Board board = boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
 
@@ -43,11 +43,11 @@ public class BoardService {
             boardRepository.updateHits(id);
         }
 
-        return BoardResponse.of(board);
+        return BoardResponse.GetOne.of(board);
     }
 
     @Transactional
-    public void editBoard(Long id, BoardRequest.Post request) {
+    public void editBoard(Long id, BoardRequest.Register request) {
         Long userId = getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 

@@ -14,26 +14,6 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class UserResponse {
 
-    @UtilityClass
-    public static class Read {
-        String email;
-
-        String password;
-
-        String nickname;
-
-        String phone;
-
-        public User toEntity() {
-            return User.builder()
-                    .email(email)
-                    .password(password)
-                    .nickname(nickname)
-                    .phone(phone)
-                    .build();
-        }
-    }
-
     @Builder
     @AllArgsConstructor
     @Getter
@@ -47,9 +27,7 @@ public class UserResponse {
         String phone;
 
         public static List<Friend> of(List<UserFriend> userFriends) {
-            return userFriends.stream()
-                    .map(Friend::of)
-                    .collect(Collectors.toList());
+            return userFriends.stream().map(Friend::of).collect(Collectors.toList());
         }
 
         public static Friend of(UserFriend userFriend) {

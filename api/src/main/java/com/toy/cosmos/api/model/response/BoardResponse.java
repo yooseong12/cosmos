@@ -1,61 +1,75 @@
 package com.toy.cosmos.api.model.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.entity.Comment;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class BoardResponse {
 
-    Long id;
+@UtilityClass
+public class BoardResponse { //todo: inner class 생성하기
 
-    String title;
+    @SuperBuilder
+    @Getter
+    @Setter
+    public static class GetOne extends GetMany {
 
-    String content;
+        String content;
 
-    String writer;
+        Set<Comment> comment;
 
-    Integer hits;
-
-    Integer liked;
-
-    Set<Comment> comment;
-
-    public static List<BoardResponse> ofs(List<Board> boards) {
-        return boards.stream().map(BoardResponse::ofs).collect(Collectors.toList());
+        public static GetOne of(Board board) {
+            return GetOne.builder()
+                    .id(board.getId())
+                    .title(board.getTitle())
+                    .content(board.getContent())
+                    .hits(board.getHits())
+                    .liked(board.getLiked())
+                    .writer(board.getUser().getNickname())
+                    .comment(board.getComments())
+                    .build();
+        }
     }
 
-    public static BoardResponse ofs(Board board) {
-        return BoardResponse.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .hits(board.getHits())
-                .liked(board.getLiked())
-                .writer(board.getUser().getNickname())
-                .build();
+    @SuperBuilder
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class GetMany {
+
+        Long id;
+
+        String title;
+
+        String writer;
+
+        Integer hits;
+
+        Integer liked;
+
+
+        public static List<GetMany> of(List<Board> boards) {
+            return boards.stream().map(GetMany::of).collect(Collectors.toList());
+        }
+
+        public static GetMany of(Board board) {
+            return GetMany.builder()
+                    .id(board.getId())
+                    .title(board.getTitle())
+                    .hits(board.getHits())
+                    .liked(board.getLiked())
+                    .writer(board.getUser().getNickname())
+                    .build();
+        }
     }
 
-    public static BoardResponse of(Board board) {
-        return BoardResponse.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .hits(board.getHits())
-                .liked(board.getLiked())
-                .writer(board.getUser().getNickname())
-                .comment(board.getComments())
-                .build();
-    }
 
 }

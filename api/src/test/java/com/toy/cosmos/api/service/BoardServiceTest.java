@@ -28,7 +28,7 @@ public class BoardServiceTest {
     @Test
     @Transactional
     void insertBoardTest() {
-        BoardRequest.Post request = new BoardRequest.Post();
+        BoardRequest.Register request = new BoardRequest.Register();
         request.setTitle("새로운 제목6");
         request.setContent("새로운 내용6");
         Board board = boardRepository.getOne(6L);
@@ -52,7 +52,6 @@ public class BoardServiceTest {
     void getBoardTest() {
         Long boardId = 1L;
 
-
         boardService.getBoard(boardId);
     }
 
@@ -60,7 +59,7 @@ public class BoardServiceTest {
     @Transactional
     void updateBoardTest() {
         Long id = 1L;
-        BoardRequest.Post request = new BoardRequest.Post();
+        BoardRequest.Register request = new BoardRequest.Register();
         request.setTitle("변경된 제목1");
         request.setContent("변경된 내용1");
 
