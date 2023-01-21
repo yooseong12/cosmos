@@ -25,4 +25,6 @@ public interface BoardCustomRepository {
     long deleteBoard(Long id);
 
     long deleteComment(Long boardId,Long commentId);
+
+    Optional<Board> findBoardWithCommentStatusBy(Long id);
 }

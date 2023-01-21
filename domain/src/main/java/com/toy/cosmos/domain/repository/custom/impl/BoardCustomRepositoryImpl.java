@@ -78,4 +78,16 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                         .and(comment.status.eq(Status.Comment.NORMAL)))
                 .execute();
     }
+
+    @Override
+    public Optional<Board> findBoardWithCommentStatusBy(Long id) {
+        return Optional.ofNullable(new JPAQuery<Board>(entityManager)
+                .from(board)
+                .join(board.comments, comment)
+                .fetchJoin()
+                .where(board.id.eq(id)
+                        .and(board.status.eq(Status.Board.NORMAL))
+                        .and(comment.status.eq(Status.Comment.NORMAL)))
+                .fetchOne());
+    }
 }
