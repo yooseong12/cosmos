@@ -37,7 +37,7 @@ public class BoardService {
     @Transactional
     public BoardResponse getBoard(Long id) {
         Long userId = getLoginUserId();
-        Board board = boardRepository.findById(id).orElseThrow(NotFoundBoardException::new);
+        Board board = boardRepository.findBoardWithCommentBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
             boardRepository.updateHits(id);

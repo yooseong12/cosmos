@@ -24,14 +24,14 @@ public class UserResponse {
 
         String phone;
 
-        public User toEntity() {
-            return User.builder()
-                    .email(email)
-                    .password(password)
-                    .nickname(nickname)
-                    .phone(phone)
-                    .build();
-        }
+//        public User toEntity() {
+//            return User.builder()
+//                    .email(email)
+//                    .password(password)
+//                    .nickname(nickname)
+//                    .phone(phone)
+//                    .build();
+//        }
     }
 
     @Builder

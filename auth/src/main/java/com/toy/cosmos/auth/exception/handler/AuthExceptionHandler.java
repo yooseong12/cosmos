@@ -7,7 +7,7 @@ import com.toy.cosmos.auth.exception.login.ExpiredTokenException;
 import com.toy.cosmos.auth.exception.login.InvalidTokenException;
 import com.toy.cosmos.auth.exception.login.LoginException;
 import com.toy.cosmos.auth.model.Response;
-import com.toy.cosmos.auth.value.Error;
+import com.toy.cosmos.auth.value.AuthError;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class AuthExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public Response<Void> unauthorizedExceptionHandler(UnauthorizedException e) {
-        return createResponse(Error.UNAUTHORIZED);
+        return createResponse(AuthError.UNAUTHORIZED);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -40,19 +40,19 @@ public class AuthExceptionHandler {
             String jwtToken = tokenProvider.getJwtToken(httpServletRequest);
             tokenProvider.isValidToken(jwtToken);
         } catch (ExpiredJwtException ex) {
-            return createResponse(Error.EXPIRED_TOKEN);
+            return createResponse(AuthError.EXPIRED_TOKEN);
         } catch (ExpiredTokenException | InvalidTokenException ex) {
-            return createResponse(ex.getError());
+            return createResponse(ex.getAuthError());
         } catch (Exception ignored) {
         }
-        return createResponse(Error.UNAUTHORIZED);
+        return createResponse(AuthError.UNAUTHORIZED);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidTokenException.class)
     public Response<Void> invalidTokenExceptionHandler(InvalidTokenException e) {
         log.warn("[auth error]: message: {}", e.getMessage());
-        return createResponse(e.getError());
+        return createResponse(e.getAuthError());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -60,11 +60,11 @@ public class AuthExceptionHandler {
     public Response<Void> joinExceptionHandler(JoinException e) {
         log.error("message: {}", e.getMessage());
 
-        Error error = e.getError();
+        AuthError authError = e.getAuthError();
 
         return Response.<Void>builder()
-                .code(error.getCode())
-                .message("message: " + error.getMessage())
+                .code(authError.getCode())
+                .message("message: " + authError.getMessage())
                 .build();
     }
 
@@ -73,16 +73,16 @@ public class AuthExceptionHandler {
     public Response<Void> loginExceptionHandler(LoginException e) {
         log.warn("message: {}", e.getMessage());
 
-        Error error = e.getError();
+        AuthError authError = e.getAuthError();
 
         return Response.<Void>builder()
-                .code(error.getCode())
-                .message("message: " + error.getMessage())
+                .code(authError.getCode())
+                .message("message: " + authError.getMessage())
                 .build();
     }
 
-    private Response<Void> createResponse(Error error) {
-        return createResponse(error.getCode(), error.getMessage());
+    private Response<Void> createResponse(AuthError authError) {
+        return createResponse(authError.getCode(), authError.getMessage());
     }
 
     private Response<Void> createResponse(Integer code, String message) {

@@ -4,5 +4,3 @@ spring:
   profiles:
     include:
       - domain-test
-      - auth
-

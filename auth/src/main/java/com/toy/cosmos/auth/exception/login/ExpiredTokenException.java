@@ -1,7 +1,7 @@
 package com.toy.cosmos.auth.exception.login;
 
 import com.toy.cosmos.auth.exception.UserException;
-import com.toy.cosmos.auth.value.Error;
+import com.toy.cosmos.auth.value.AuthError;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +13,7 @@ public class ExpiredTokenException extends UserException {
     String token;
 
     public ExpiredTokenException(String token) {
-        super(Error.EXPIRED_TOKEN);
+        super(AuthError.EXPIRED_TOKEN);
         this.token = token;
     }
 

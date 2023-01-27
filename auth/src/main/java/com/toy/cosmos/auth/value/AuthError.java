@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Error {
+public enum AuthError {
 
     EXPIRED_TOKEN(9000, "토큰이 만료되었습니다."),
     INVALID_TOKEN(9001, "잘못된 토큰입니다."),

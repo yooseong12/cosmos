@@ -45,4 +45,5 @@ public class Board extends BaseEntity {
     @OrderBy("id desc")
     @JsonManagedReference
     Set<Comment> comments;
+    
 }

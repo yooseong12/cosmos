@@ -5,7 +5,7 @@ bootJar {
 }
 
 dependencies {
-    api project(path :':auth', configuration: 'default')
+    api project(path: ':auth', configuration: 'default')
 
     implementation('commons-io:commons-io:2.6')
     implementation('io.jsonwebtoken:jjwt-api:0.11.5')
@@ -15,9 +15,9 @@ dependencies {
 }
 
 task zip(type: Zip, dependsOn: bootJar) {
-//    from ('../.ebextensions') {
-//        into '.ebextensions'
-//    }
+    from('../.ebextensions') {
+        into '.ebextensions'
+    }
     from '.procfile'
     from jar.outputs.files
 

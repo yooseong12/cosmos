@@ -13,7 +13,9 @@ public enum Error {
     ACCESS_DENIED_EXCEPTION(1003, "access denied exception"),
     INVALID_PASSWORD(1000, "user not found"),
 
-    NOT_FOUND_BOARD(2001, "board not found");
+    NOT_FOUND_BOARD(2001, "board not found"),
+
+    INTERNAL_SERVER_ERROR(9999, "internal server error");
 
 
     final Integer code;
