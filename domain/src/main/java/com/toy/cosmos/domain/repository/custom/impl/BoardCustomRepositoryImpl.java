@@ -20,6 +20,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
 
     private final EntityManager entityManager;
 
+
     @Override
     public Optional<Board> findBoardWithUserBy(Long id) {
         return Optional.ofNullable(new JPAQuery<Board>(entityManager)
@@ -47,7 +48,6 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                 .where(board.id.eq(id))
                 .execute();
     }
-
 
     @Override
     public long editBoard(Long id, Long userId, String title, String content) {
@@ -80,15 +80,14 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public Optional<Board> findBoardWithCommentBy(Long id) {
+    public Optional<Board> findBoardWithCommentStatusBy(Long id) {
         return Optional.ofNullable(new JPAQuery<Board>(entityManager)
                 .from(board)
                 .join(board.comments, comment)
                 .fetchJoin()
-                .where(board.id.eq(id),
-                        board.status.eq(Status.Board.NORMAL),
-                        comment.status.eq(Status.Comment.NORMAL)
-                )
+                .where(board.id.eq(id)
+                        .and(board.status.eq(Status.Board.NORMAL))
+                        .and(comment.status.eq(Status.Comment.NORMAL)))
                 .fetchOne());
     }
 }

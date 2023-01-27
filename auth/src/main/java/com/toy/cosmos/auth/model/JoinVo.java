@@ -36,6 +36,7 @@ public class JoinVo {
 
     @NotNull
     @Size(max = 20)
+    @Pattern(regexp = Regex.PHONE)
     String tel;
 
     LocalDate birthDate;

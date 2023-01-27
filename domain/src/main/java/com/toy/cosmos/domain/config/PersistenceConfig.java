@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Configuration
-@EntityScan("com.hyunjun.report.domain.entity")
+@EntityScan("com.toy.cosmos.domain.entity")
 @EnableJpaRepositories("com.toy.cosmos.domain.repository")
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
 public class PersistenceConfig {

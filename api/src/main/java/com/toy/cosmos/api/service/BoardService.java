@@ -28,22 +28,22 @@ public class BoardService {
         boardRepository.save(request.toEntity(userId));
     }
 
-    public List<BoardResponse> getBoards(BoardRequest.Search request) {
+    public List<BoardResponse.GetMany> getBoards(BoardRequest.Search request) {
         List<Board> boards = boardRepository.findBoardListByOrderByIdDesc(request.getPage(), request.getSize());
 
-        return BoardResponse.ofs(boards);
+        return BoardResponse.GetMany.of(boards);
     }
 
     @Transactional
-    public BoardResponse getBoard(Long id) {
+    public BoardResponse.GetOne getBoard(Long id) {
         Long userId = getLoginUserId();
-        Board board = boardRepository.findBoardWithCommentBy(id).orElseThrow(NotFoundBoardException::new);
+        Board board = boardRepository.findBoardWithCommentStatusBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
             boardRepository.updateHits(id);
         }
 
-        return BoardResponse.of(board);
+        return BoardResponse.GetOne.of(board);
     }
 
     @Transactional

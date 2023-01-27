@@ -52,7 +52,6 @@ public class BoardServiceTest {
     void getBoardTest() {
         Long boardId = 1L;
 
-
         boardService.getBoard(boardId);
     }
 

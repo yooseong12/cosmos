@@ -35,16 +35,16 @@ public class BoardController {
     }
 
     @GetMapping("/boards")
-    public Response<List<BoardResponse>> getBoards(BoardRequest.Search request) {
-        return Response.<List<BoardResponse>>builder()
+    public Response<List<BoardResponse.GetMany>> getBoards(BoardRequest.Search request) {
+        return Response.<List<BoardResponse.GetMany>>builder()
                 .code(HttpStatus.OK.value())
                 .data(boardService.getBoards(request))
                 .build();
     }
 
     @GetMapping("/boards/{id:[\\d]+}")
-    public Response<BoardResponse> getBoard(@PathVariable Long id) {
-        return Response.<BoardResponse>builder()
+    public Response<BoardResponse.GetOne> getBoard(@PathVariable Long id) {
+        return Response.<BoardResponse.GetOne>builder()
                 .code(HttpStatus.OK.value())
                 .data(boardService.getBoard(id))
                 .build();
@@ -70,7 +70,7 @@ public class BoardController {
 
     @PostMapping("/comment/status/{boardId:[\\d]+}/{commentId:[\\d]+}")
     public Response<Void> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
-        boardService.deleteComment(boardId,commentId);
+        boardService.deleteComment(boardId, commentId);
         return Response.<Void>builder().build();
     }
 
