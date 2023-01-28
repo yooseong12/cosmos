@@ -1,6 +1,5 @@
 package com.toy.cosmos.api.model.request;
 
-import com.toy.cosmos.auth.model.LoginVo;
 import com.toy.cosmos.domain.common.CommonConstant;
 import com.toy.cosmos.domain.common.Status;
 import com.toy.cosmos.domain.entity.User;
@@ -31,12 +30,6 @@ public class UserRequest {
         @Size(max = 255)
         String password;
 
-        public LoginVo toLoginVo() {
-            return LoginVo.builder()
-                    .email(email)
-                    .password(password)
-                    .build();
-        }
     }
 
     @Getter

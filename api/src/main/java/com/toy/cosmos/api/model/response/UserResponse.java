@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
+// todo 유성: Friend 정체가 뭔지
 public class UserResponse {
 
-    @Builder
-    @AllArgsConstructor
     @Getter
     @Setter
+    @Builder
+    @AllArgsConstructor
     public static class Friend {
 
         Long friendId;

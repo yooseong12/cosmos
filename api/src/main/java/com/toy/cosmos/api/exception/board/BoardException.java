@@ -12,4 +12,5 @@ public class BoardException extends RuntimeException {
         super(error.getMessage());
         this.error = error;
     }
+
 }

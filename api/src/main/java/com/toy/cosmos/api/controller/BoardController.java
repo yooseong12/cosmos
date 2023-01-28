@@ -15,18 +15,6 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
 
-    /**
-     * 1. 등록(제목, 내용)
-     * 2. 목록 조회(페이지네이션)
-     * 3. 단건 조회(조회수 카운트, 좋아요, 댓글)
-     * 4. 수정(제목, 내용)
-     * 5. 삭제
-     * <p>
-     * Entity
-     * 1. Board
-     * 2. Comment
-     */
-
     private final BoardService boardService;
 
     @PostMapping("/boards")

@@ -19,7 +19,7 @@ public class BoardRequest {
     @Getter
     @Setter
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    public static class Register { // todo: renaming check
+    public static class Register {
 
         @NotNull
         @Size(max = 50)
@@ -48,12 +48,6 @@ public class BoardRequest {
 
         Integer size = 5;
 
-        /**
-         * 몇개씩 가져올까?
-         * 몇페이지인데?
-         * @param userId
-         * @return
-         */
     }
 
     @Getter

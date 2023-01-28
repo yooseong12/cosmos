@@ -94,5 +94,4 @@ public class BoardService {
         return 1L;
     }
 
-
 }

@@ -70,7 +70,7 @@ public class UserService {
         );
     }
 
-    // todo: spring security 작업 후 변경예정
+    // todo hyunjun.kang: spring security 작업 후 변경예정
     private Long getLoginUserId() {
         return 1L;
     }

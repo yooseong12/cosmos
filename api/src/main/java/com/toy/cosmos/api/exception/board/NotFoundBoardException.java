@@ -7,4 +7,5 @@ public class NotFoundBoardException extends BoardException {
     public NotFoundBoardException() {
         super(Error.NOT_FOUND_BOARD);
     }
+
 }

@@ -17,7 +17,6 @@ public enum Error {
 
     INTERNAL_SERVER_ERROR(9999, "internal server error");
 
-
     final Integer code;
 
     final String message;

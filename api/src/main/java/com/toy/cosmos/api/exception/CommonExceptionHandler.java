@@ -3,7 +3,9 @@ package com.toy.cosmos.api.exception;
 import com.toy.cosmos.api.exception.board.BoardException;
 import com.toy.cosmos.api.exception.user.UserException;
 import com.toy.cosmos.api.model.response.Response;
+import com.toy.cosmos.auth.value.AuthError;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,10 +31,22 @@ public class CommonExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Response<Void> accessDeniedExceptionHandler(AccessDeniedException e) {
+        return Response.<Void>builder()
+                .code(AuthError.PERMISSION_DENIED.getCode())
+                .message(AuthError.PERMISSION_DENIED.getMessage())
+                .build();
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String exceptionHandler(Exception e) {
-        return "나중에하자 존나 귀찮다"; // todo: exception 처리 예정
+    public Response<Void> exceptionHandler(Exception e) {
+        return Response.<Void>builder()
+                .code(Error.INTERNAL_SERVER_ERROR.getCode())
+                .message(Error.INTERNAL_SERVER_ERROR.getMessage())
+                .build();
     }
 
 }

@@ -2,7 +2,6 @@ package com.toy.cosmos.domain.repository;
 
 import com.toy.cosmos.domain.entity.Board;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -35,14 +34,12 @@ public class BoardRepositoryTest {
 
 
     @Test
-    @Ignore
     @Transactional
     public void editBoardTest() {
         Long id = 1L;
         Long userId = 1L;
         String title = "변경된 제목1";
         String content = "변경된 내용1";
-        Board board = boardRepository.findById(id).get();
 
         boardRepository.editBoard(id, userId, title, content);
     }
