@@ -11,4 +11,5 @@ public class CommonConstant {
         public static final String PHONE = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$";
 
     }
+
 }

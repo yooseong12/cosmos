@@ -80,7 +80,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public Optional<Board> findBoardWithCommentStatusBy(Long id) {
+    public Optional<Board> findBoardWithCommentBy(Long id) {
         return Optional.ofNullable(new JPAQuery<Board>(entityManager)
                 .from(board)
                 .join(board.comments, comment)
@@ -90,4 +90,5 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                         .and(comment.status.eq(Status.Comment.NORMAL)))
                 .fetchOne());
     }
+
 }

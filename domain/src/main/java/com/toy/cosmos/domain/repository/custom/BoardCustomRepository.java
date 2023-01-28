@@ -3,7 +3,6 @@ package com.toy.cosmos.domain.repository.custom;
 
 import com.toy.cosmos.domain.entity.Board;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
@@ -26,5 +25,6 @@ public interface BoardCustomRepository {
 
     long deleteComment(Long boardId,Long commentId);
 
-    Optional<Board> findBoardWithCommentStatusBy(Long id);
+    Optional<Board> findBoardWithCommentBy(Long id);
+
 }

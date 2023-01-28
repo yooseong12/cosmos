@@ -23,13 +23,6 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
 
     @Override
     public List<User> findAllUserWithUserFriend(Long id, Status.UserFriend status) {
-        /**
-         * select u.*
-         *  from user u join user_friends uf
-         *          on u.id = uf.friend_id
-         *  where uf.user_id = ${user_id}
-         *    and uf.status = 'FOLLOW'
-         */
         return new JPAQuery<User>(entityManager)
                 .from(user)
                 .join(userFriend).on(user.id.eq(userFriend.friendId))
@@ -47,14 +40,6 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
                 .fetchOne()
         );
     }
-
-    /**
-     * delete
-     * from user u join user_friend uf
-     * on u.id = uf.user_id
-     * where
-     * u.id = uf.user_id and
-     */
 
     @Override
     public long deleteFriendIdByUserId(Long userId, Long friendId) {
