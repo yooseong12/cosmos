@@ -32,11 +32,13 @@ public class UserController {
     }
 
     @PostMapping("/withdraw/{id:[\\d]+}")
+    @PreAuthorize("isAuthenticated()")
     public void withdrawUser(@PathVariable Long id) {
         userService.withdrawUser(id);
     }
 
     @PostMapping("/friend/{id:[\\d]+}")
+    @PreAuthorize("isAuthenticated()")
     public void requestFriend(@PathVariable Long id) {
         userService.requestFriend(id);
     }
@@ -51,6 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/friend")
+    @PreAuthorize("isAuthenticated()")
     public Response<UserResponse.UserInfo> findFriend(UserRequest.FindFriend request) {
         if (ObjectUtils.isEmpty(request.getEmail()) && ObjectUtils.isEmpty(request.getPhone())) {
             throw new ValidationException();
@@ -62,6 +65,7 @@ public class UserController {
     }
 
     @DeleteMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
+    @PreAuthorize("isAuthenticated()")
     public Response<Void> deleteFriend(@PathVariable Long userId, @PathVariable Long friendId) {
         userService.deleteFriend(userId, friendId);
         return Response.<Void>builder()
@@ -69,6 +73,7 @@ public class UserController {
     }
 
     @PatchMapping("/friend/{userId:[\\d]+}/{friendId:[\\d]+}")
+    @PreAuthorize("isAuthenticated()")
     public Response<Void> blockedFriend(@PathVariable Long userId, @PathVariable Long friendId) {
         userService.blockedFriend(userId, friendId);
         return Response.<Void>builder()

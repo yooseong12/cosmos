@@ -31,14 +31,14 @@ public class BoardService {
         boardRepository.save(request.toEntity(userId));
     }
 
-    public List<BoardResponse.GetMany> getBoards(BoardRequest.Search request) {
+    public List<BoardResponse.Search> getBoards(BoardRequest.Search request) {
         List<Board> boards = boardRepository.findBoardListByOrderByIdDesc(request.getPage(), request.getSize());
 
-        return BoardResponse.GetMany.of(boards);
+        return BoardResponse.Search.of(boards);
     }
 
     @Transactional
-    public BoardResponse.GetOne getBoard(Long id) {
+    public BoardResponse.Detail getBoard(Long id) {
         Long userId = loginService.getLoginUserId();
         Board board = boardRepository.findBoardWithCommentBy(id).orElseThrow(NotFoundBoardException::new);
 
@@ -46,7 +46,7 @@ public class BoardService {
             boardRepository.updateHits(id);
         }
 
-        return BoardResponse.GetOne.of(board);
+        return BoardResponse.Detail.of(board);
     }
 
     @Transactional

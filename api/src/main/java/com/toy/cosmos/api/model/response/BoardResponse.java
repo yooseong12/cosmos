@@ -14,61 +14,7 @@ import java.util.stream.Collectors;
 
 
 @UtilityClass
-// todo 유성:
 public class BoardResponse {
-
-    @Getter
-    @Setter
-    @SuperBuilder
-    public static class GetOne extends GetMany {
-
-        String content;
-
-        Set<Comment> comments;
-
-        public static GetOne of(Board board) {
-            return GetOne.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .hits(board.getHits())
-                    .liked(board.getLiked())
-                    .writer(board.getUser().getNickname())
-                    .comments(board.getComments())
-                    .build();
-        }
-    }
-
-    @Getter
-    @Setter
-    @SuperBuilder
-    @AllArgsConstructor
-    public static class GetMany {
-
-        Long id;
-
-        String title;
-
-        String writer;
-
-        Integer hits;
-
-        Integer liked;
-
-        public static List<GetMany> of(List<Board> boards) {
-            return boards.stream().map(GetMany::of).collect(Collectors.toList());
-        }
-
-        public static GetMany of(Board board) {
-            return GetMany.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .hits(board.getHits())
-                    .liked(board.getLiked())
-                    .writer(board.getUser().getNickname())
-                    .build();
-        }
-    }
 
     @Getter
     @Setter
@@ -92,19 +38,29 @@ public class BoardResponse {
     @Setter
     @SuperBuilder
     public static class Detail extends BoardBase {
+
         String content;
 
         Set<Comment> comments;
+
+        public static Detail of(Board board) {
+            return Detail.builder()
+                    .id(board.getId())
+                    .title(board.getTitle())
+                    .hits(board.getHits())
+                    .liked(board.getLiked())
+                    .writer(board.getUser().getNickname())
+                    .content(board.getContent())
+                    .comments(board.getComments())
+                    .build();
+        }
+
     }
 
     @Getter
     @Setter
     @SuperBuilder
     public static class Search extends BoardBase {
-
-        public Search(Long id, String title, String writer, Integer hits, Integer liked) {
-            super(id, title, writer, hits, liked);
-        }
 
         public static List<Search> of(List<Board> boards) {
             return boards.stream().map(Search::of).collect(Collectors.toList());
@@ -119,6 +75,7 @@ public class BoardResponse {
                     .writer(board.getUser().getNickname())
                     .build();
         }
+
     }
 
 }

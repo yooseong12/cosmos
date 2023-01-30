@@ -12,33 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
-// todo 유성: Friend 정체가 뭔지
 public class UserResponse {
-
-    @Getter
-    @Setter
-    @Builder
-    @AllArgsConstructor
-    public static class Friend {
-
-        Long friendId;
-
-        String nickname;
-
-        String phone;
-
-        public static List<Friend> of(List<UserFriend> userFriends) {
-            return userFriends.stream().map(Friend::of).collect(Collectors.toList());
-        }
-
-        public static Friend of(UserFriend userFriend) {
-            return Friend.builder()
-                    .friendId(userFriend.getFriendId())
-                    .nickname(userFriend.getUser().getNickname())
-                    .phone(userFriend.getUser().getPhone())
-                    .build();
-        }
-    }
 
     @Builder
     @AllArgsConstructor
