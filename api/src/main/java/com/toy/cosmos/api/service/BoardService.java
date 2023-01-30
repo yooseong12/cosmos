@@ -4,6 +4,7 @@ import com.toy.cosmos.api.exception.board.AccessDeniedException;
 import com.toy.cosmos.api.exception.board.NotFoundBoardException;
 import com.toy.cosmos.api.model.request.BoardRequest;
 import com.toy.cosmos.api.model.response.BoardResponse;
+import com.toy.cosmos.auth.service.LoginService;
 import com.toy.cosmos.domain.entity.Board;
 import com.toy.cosmos.domain.repository.BoardRepository;
 import com.toy.cosmos.domain.repository.CommentRepository;
@@ -18,13 +19,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
 
+    private final LoginService loginService;
+
     private final BoardRepository boardRepository;
 
     private final CommentRepository commentRepository;
 
     @Transactional
     public void insertBoard(BoardRequest.Register request) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         boardRepository.save(request.toEntity(userId));
     }
 
@@ -36,7 +39,7 @@ public class BoardService {
 
     @Transactional
     public BoardResponse.GetOne getBoard(Long id) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         Board board = boardRepository.findBoardWithCommentBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
@@ -48,7 +51,7 @@ public class BoardService {
 
     @Transactional
     public void editBoard(Long id, BoardRequest.Register request) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
@@ -62,7 +65,7 @@ public class BoardService {
 
     @Transactional
     public void deleteBoard(Long id) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(id).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
@@ -80,7 +83,7 @@ public class BoardService {
 
     @Transactional
     public void deleteComment(Long boardId, Long commentId) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         Board board = boardRepository.findBoardWithUserBy(boardId).orElseThrow(NotFoundBoardException::new);
 
         if (!userId.equals(board.getUser().getId())) {
@@ -88,10 +91,6 @@ public class BoardService {
         }
 
         boardRepository.deleteComment(boardId, commentId);
-    }
-
-    private Long getLoginUserId() {
-        return 1L;
     }
 
 }

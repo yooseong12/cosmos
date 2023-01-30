@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public void requestFriend(Long id) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
 
         userRepository.findById(id).orElseThrow(NotFoundUserException::new);
         userFriendRepository.findByUserAndFriendId(User.builder().id(userId).build(), id)
@@ -55,7 +55,7 @@ public class UserService {
     }
 
     public List<UserResponse.UserInfo> getFriends(UserRequest.Friend request) {
-        Long userId = getLoginUserId();
+        Long userId = loginService.getLoginUserId();
         List<User> users = userRepository.findAllUserWithUserFriend(
                 userId, request.getStatus()
         );
@@ -68,11 +68,6 @@ public class UserService {
                 userRepository.findBy(request.getEmail(), request.getPhone())
                         .orElseThrow(NotFoundUserException::new)
         );
-    }
-
-    // todo hyunjun.kang: spring security 작업 후 변경예정
-    private Long getLoginUserId() {
-        return 1L;
     }
 
     public void deleteFriend(Long userId, Long friendId) {
