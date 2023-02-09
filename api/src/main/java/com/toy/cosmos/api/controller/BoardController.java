@@ -25,7 +25,6 @@ public class BoardController {
     }
 
     @GetMapping("/boards")
-    @PreAuthorize("isAuthenticated()")
     public Response<List<BoardResponse.Search>> getBoards(BoardRequest.Search request) {
         return Response.<List<BoardResponse.Search>>builder()
                 .code(HttpStatus.OK.value())
@@ -34,7 +33,6 @@ public class BoardController {
     }
 
     @GetMapping("/boards/{id:[\\d]+}")
-    @PreAuthorize("isAuthenticated()")
     public Response<BoardResponse.Detail> getBoard(@PathVariable Long id) {
         return Response.<BoardResponse.Detail>builder()
                 .code(HttpStatus.OK.value())
